@@ -1,22 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://0jipqcsji7bb"]
+[gd_scene load_steps=4 format=3 uid="uid://0jipqcsji7bb"]
 
-[ext_resource type="Script" uid="uid://bhg8kgxgj30eo" path="res://scripts/player.gd" id="1_agfs1"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_agfs1"]
-emission_enabled = true
-emission = Color(0, 0.394474, 0.273183, 1)
+[ext_resource type="Script" uid="uid://dmnl5n5b4vnow" path="res://scripts/character.gd" id="1_agfs1"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_rkhd4"]
-material = SubResource("StandardMaterial3D_agfs1")
+height = 3.0
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lrhn5"]
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_agfs1"]
+points = PackedVector3Array(0.182602, 1.46167, 0.0455521, -0.485734, -1.10355, -0.044028, -0.485729, -1.10354, 0.0440275, 0.485734, -1.10355, 0.044028, -0.044028, 1.10355, -0.485734, -0.21899, 1.09495, 0.438074, 0.044028, -1.10355, -0.485734, 0.130336, -1.0433, 0.478275, 0.485729, 1.10354, 0.0440275, -0.438074, 1.09495, -0.21899, 0.388846, 1.07982, -0.302312, 0.302312, 1.07982, 0.388846, -0.178777, -1.29686, 0.35765, -0.302313, -1.07982, -0.388848, -0.0455521, -1.46167, -0.182602, -0.438072, 1.09494, 0.218989, 0.388848, -1.07982, -0.302313, -0.302312, -1.07982, 0.388846, 0.388846, -1.07982, 0.302312, -0.182602, 1.46167, -0.0455521, 0.272271, -1.40695, 0.0906265, 0.21899, 1.09495, -0.438074, -0.0440275, 1.10354, 0.485729, -0.302312, 1.07982, -0.388846, -0.130336, -1.0433, 0.478275, 0.469358, 0.938333, -0.170542, -0.0906251, 1.40692, 0.272266, -0.485734, 1.10355, 0.044028, 0.0906251, 1.40692, -0.272266, 0.469358, 0.938333, 0.170542, -0.170542, -0.938333, -0.469358, -0.428268, -0.984857, -0.256887)
 
-[node name="CharacterBody3D" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_agfs1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("CapsuleMesh_rkhd4")
-skeleton = NodePath("../CollisionShape3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_lrhn5")
+shape = SubResource("ConvexPolygonShape3D_agfs1")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0579, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("ConvexPolygonShape3D_agfs1")
