@@ -10,8 +10,8 @@ import (
 func main() {
 	router := gin.Default()
 
-	router.GET("/bellmanford", controllers.BellmanFord)
 	router.POST("/bellmanford", controllers.BellmanFord)
+	router.POST("/sample", controllers.SampleFunction)
 
 	router.Run(":8080")
 }
