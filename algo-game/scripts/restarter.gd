@@ -16,7 +16,8 @@ func _ready() -> void:
 		assert(is_instance_of(player, CharacterBody3D), "the player assigned is not a player")
 		
 		spawn = player.position
-	printerr("There is no spawn created")
+	if !spawn:
+		printerr("There is no spawn created")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
