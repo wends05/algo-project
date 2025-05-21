@@ -1,6 +1,10 @@
 extends Node
 
 
+
+var shift_locked: bool = false
+var in_game: bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.

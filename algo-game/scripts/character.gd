@@ -11,22 +11,21 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var head = $Head
 @onready var head_camera = $Head/Camera3D
 
-var shift_locked := false
 
 func _input(event) -> void:
 	if event.is_action_pressed("shift_lock"):
-		shift_locked = !shift_locked
+		global.shift_locked = !global.shift_locked
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		if event.button_mask && 1 or shift_locked:
+		if event.button_mask && 1 or global.shift_locked:
 			
 			head.rotate_y(-event.relative.x * SENSITIVITY)
 			head_camera.rotate_x(-event.relative.y * SENSITIVITY)
 			
 			head_camera.rotation.x = clamp(head_camera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
-		if shift_locked:
+		if global.shift_locked:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		else: 
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
