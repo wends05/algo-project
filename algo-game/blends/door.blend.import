@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://tq25ayaf1kyi"
-path="res://.godot/imported/sample.blend-ae89c8f3153459db7950dad4d1650aee.scn"
+uid="uid://cp4ux71g485mb"
+path="res://.godot/imported/door.blend-bc34cfb8fd1c0fd0b5445a534d1da6eb.scn"
 
 [deps]
 
-source_file="res://sample.blend"
-dest_files=["res://.godot/imported/sample.blend-ae89c8f3153459db7950dad4d1650aee.scn"]
+source_file="res://blends/door.blend"
+dest_files=["res://.godot/imported/door.blend-bc34cfb8fd1c0fd0b5445a534d1da6eb.scn"]
 
 [params]
 
@@ -32,7 +32,26 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={}
+_subresources={
+"meshes": {
+"door_Cube_004": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": ""
+}
+},
+"nodes": {
+"PATH:Camera": {
+"import/skip_import": true
+},
+"PATH:Light": {
+"import/skip_import": true
+}
+}
+}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true
