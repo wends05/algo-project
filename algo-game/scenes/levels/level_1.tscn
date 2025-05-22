@@ -7,13 +7,14 @@
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tyffc"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_bottom_color = Color(0.207843, 0.239216, 0.290196, 1)
 ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
 
 [sub_resource type="Sky" id="Sky_ns6u7"]
 sky_material = SubResource("ProceduralSkyMaterial_tyffc")
 
 [sub_resource type="Environment" id="Environment_5t4e2"]
-background_mode = 1
+background_mode = 2
 background_color = Color(0.2106, 0.38079, 0.54, 1)
 sky = SubResource("Sky_ns6u7")
 tonemap_mode = 2

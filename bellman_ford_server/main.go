@@ -2,7 +2,7 @@ package main
 
 import (
 	// gin
-	"bellman_ford_server/controllers"
+	c "bellman_ford_server/controllers"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,8 +10,10 @@ import (
 func main() {
 	router := gin.Default()
 
-	router.POST("/bellmanford", controllers.BellmanFord)
-	router.POST("/sample", controllers.SampleFunction)
+	router.POST("/bellmanford", c.BellmanFord)
+	router.POST("/sample", c.SampleFunction)
+
+	router.GET("/graph", c.Graph)
 
 	router.Run(":8080")
 }
