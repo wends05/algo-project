@@ -22,10 +22,10 @@ func BellmanFord(c *gin.Context) {
 
 	data := BellmanFordInput{}
 	if err := c.ShouldBindJSON(&data); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": gin.H{
-			"message": "Invalid input",
-			"details": err.Error(),
-		}})
+		c.JSON(http.StatusBadRequest, structs.ErrorResponse{
+			Error:   "Invalid input",
+			Message: err.Error(),
+		})
 		return
 	}
 
@@ -33,35 +33,35 @@ func BellmanFord(c *gin.Context) {
 
 	// Check if the number of vertices is valid
 	if data.NumberOfVertices < 2 {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   "Invalid graph size",
-			"message": "Number of vertices must be at least 2 for pathfinding between distinct points.",
+		c.JSON(http.StatusBadRequest, structs.ErrorResponse{
+			Error:   "Invalid graph size",
+			Message: "Number of vertices must be at least 2 for pathfinding between distinct points.",
 		})
 		return
 	}
 	// Check if the number of edges is valid
 	if data.StartVertex < 0 || data.StartVertex >= data.NumberOfVertices {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid start vertex"})
+		c.JSON(http.StatusBadRequest, structs.ErrorResponse{Error: "Invalid start vertex"})
 		return
 	}
 	// Check if the start vertex is valid
 	if data.EndVertex < 0 || data.EndVertex >= data.NumberOfVertices {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid end vertex"})
+		c.JSON(http.StatusBadRequest, structs.ErrorResponse{Error: "Invalid end vertex"})
 		return
 	}
 	// Check if the start and end vertices are the same
 	if data.StartVertex == data.EndVertex {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   "Invalid game state",
-			"message": "Start vertex and end vertex cannot be the same according to game rules.",
+		c.JSON(http.StatusBadRequest, structs.ErrorResponse{
+			Error:   "Invalid game state",
+			Message: "Start vertex and end vertex cannot be the same according to game rules.",
 		})
 		return
 	}
 	// check if the number of edges is valid
 	if data.NumberOfVertices > 1 && len(data.Edges) == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   "No edges provided",
-			"message": "Graph has multiple vertices but no edges, making pathfinding impossible.",
+		c.JSON(http.StatusBadRequest, structs.ErrorResponse{
+			Error:   "No edges provided",
+			Message: "Graph has multiple vertices but no edges, making pathfinding impossible.",
 		})
 		return
 	}
@@ -70,9 +70,9 @@ func BellmanFord(c *gin.Context) {
 	for _, edge := range data.Edges {
 		if edge.Source < 0 || edge.Source >= data.NumberOfVertices ||
 			edge.Target < 0 || edge.Target >= data.NumberOfVertices {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error":   "Invalid edge",
-				"message": fmt.Sprintf("Edge with source %v, target %v, weight %v contains invalid vertex index", edge.Source, edge.Target, edge.Weight),
+			c.JSON(http.StatusBadRequest, structs.ErrorResponse{
+				Error:   "Invalid edge",
+				Message: fmt.Sprintf("Edge with source %v, target %v, weight %v contains invalid vertex index", edge.Source, edge.Target, edge.Weight),
 			})
 			return
 		}
@@ -131,16 +131,16 @@ func BellmanFord(c *gin.Context) {
 	for _, edge := range data.Edges {
 		if distances[edge.Source] != math.MaxInt32 &&
 			distances[edge.Source]+edge.Weight < distances[edge.Target] {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Negative cycle detected"})
+			c.JSON(http.StatusBadRequest, structs.ErrorResponse{Error: "Negative cycle detected"})
 			return
 		}
 	}
 
 	// check if the end vertex is reachable
 	if distances[data.EndVertex] == math.MaxInt32 {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   "No path found",
-			"message": "End vertex is not reachable from start vertex",
+		c.JSON(http.StatusBadRequest, structs.ErrorResponse{
+			Error:   "No path found",
+			Message: "End vertex is not reachable from start vertex",
 		})
 		return
 	}
@@ -151,9 +151,9 @@ func BellmanFord(c *gin.Context) {
 	if len(path) == 0 {
 		// This indicates an inconsistency: the end vertex was marked reachable,
 		// but path reconstruction failed.
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error":   "Path reconstruction error",
-			"message": "Failed to reconstruct path. The end vertex might be disconnected in the predecessor tree.",
+		c.JSON(http.StatusInternalServerError, structs.ErrorResponse{
+			Error:   "Path reconstruction error",
+			Message: "Failed to reconstruct path. The end vertex might be disconnected in the predecessor tree.",
 		})
 		return
 	}
@@ -164,9 +164,8 @@ func BellmanFord(c *gin.Context) {
 	})
 }
 
-
 // buildPath reconstructs the shortest path from the predecessor array.
-func buildPath(startVertex, endVertex int, predecessor []int) []int {
+func buildPath(startVertex int, endVertex int, predecessor []int) []int {
 	path := []int{}
 	current := endVertex
 
