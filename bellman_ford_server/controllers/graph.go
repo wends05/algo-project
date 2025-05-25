@@ -37,7 +37,7 @@ func GenerateRandomGraph(c *gin.Context) {
 	}
 
 	// vertices should be at least 3
-	if vertices < 2 {
+	if vertices < 3 {
 		c.JSON(http.StatusBadRequest, structs.ErrorResponse{
 			Error:   "vertices must be at least 3",
 			Message: "Number of vertices must be at least 3 for pathfinding between distinct points.",
@@ -137,8 +137,8 @@ func GenerateRandomGraph(c *gin.Context) {
 func generateGraph(vertices, weightRange, startVertex, endVertex int) []structs.Edge {
 
 	// With max 3 outgoing edges per vertex, maximum possible edges is 3 * vertices
-	maxPossibleEdges := min(vertices*3, vertices*(vertices-1)) // Respect both constraints
-	targetNumEdges := rand.Intn(maxPossibleEdges/2 + 1) + maxPossibleEdges/4 // Target 25-75% of max possible
+	maxPossibleEdges := min(vertices*3, vertices*(vertices-1))             // Respect both constraints
+	targetNumEdges := rand.Intn(maxPossibleEdges/2+1) + maxPossibleEdges/4 // Target 25-75% of max possible
 
 	edges := make([]structs.Edge, 0, targetNumEdges)
 	edgeSet := make(map[string]bool)
@@ -171,9 +171,9 @@ func generateGraph(vertices, weightRange, startVertex, endVertex int) []structs.
 	if len(intermediateVertices) > 0 {
 		// Always select at least 1 intermediate vertex to prevent direct start->end edge
 		minVertices := 1
-		maxVertices := min(len(intermediateVertices), 3) // Limit to 3 intermediate vertices
+		maxVertices := min(len(intermediateVertices), 3)                             // Limit to 3 intermediate vertices
 		numIntermediateVertices = rand.Intn(maxVertices-minVertices+1) + minVertices // 1 to maxVertices
-		
+
 		// Shuffle intermediate vertices to randomize selection
 		rand.Shuffle(len(intermediateVertices), func(i, j int) {
 			intermediateVertices[i], intermediateVertices[j] = intermediateVertices[j], intermediateVertices[i]
@@ -193,7 +193,7 @@ func generateGraph(vertices, weightRange, startVertex, endVertex int) []structs.
 				break
 			}
 		}
-		
+
 		if candidateVertex != -1 {
 			// Adjust the candidate vertex level to be between start and end
 			levels[candidateVertex] = (levels[startVertex] + levels[endVertex]) / 2
@@ -210,7 +210,7 @@ func generateGraph(vertices, weightRange, startVertex, endVertex int) []structs.
 	})
 
 	// Create edges for the guaranteed path
-	for i := range len(pathVertices)-1 {
+	for i := range len(pathVertices) - 1 {
 		source := pathVertices[i]
 		target := pathVertices[i+1]
 		weight := rand.Intn(2*weightRange+1) - weightRange
@@ -229,7 +229,7 @@ func generateGraph(vertices, weightRange, startVertex, endVertex int) []structs.
 
 	// Track outgoing edge count for each vertex (max 3 per vertex)
 	outgoingEdgeCount := make([]int, vertices)
-	
+
 	// Count edges from the guaranteed path
 	for _, edge := range edges {
 		outgoingEdgeCount[edge.Source]++
@@ -283,7 +283,7 @@ func generateGraph(vertices, weightRange, startVertex, endVertex int) []structs.
 		}
 
 		edges = append(edges, newEdge)
-		edgeSet[edgeKey] = true // Mark this edge as added.
+		edgeSet[edgeKey] = true     // Mark this edge as added.
 		outgoingEdgeCount[source]++ // Increment outgoing edge count for source vertex
 	}
 
