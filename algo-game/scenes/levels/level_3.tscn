@@ -1,4 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://dkwx8qvxuwvs4"]
+[gd_scene load_steps=10 format=3 uid="uid://dkwx8qvxuwvs4"]
+
+[ext_resource type="PackedScene" uid="uid://0jipqcsji7bb" path="res://scenes/Player.tscn" id="1_o8c3j"]
+[ext_resource type="PackedScene" uid="uid://bmmchwharvst6" path="res://scenes/restarter.tscn" id="2_44gv1"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_rkukh"]
 rayleigh_color = Color(0.156264, 0.40581, 0.708987, 1)
@@ -15,38 +18,45 @@ glow_enabled = true
 [sub_resource type="PlaneMesh" id="PlaneMesh_rkukh"]
 size = Vector2(20, 30)
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_rkukh"]
+points = PackedVector3Array(-10.2381, -0.238095, -15.2381, 10.2381, 0.238095, 15.2381, 10.2381, -0.238095, 15.2381, 10.2381, 0.238095, -15.2381, -10.2381, 0.238095, 15.2381, -10.2381, -0.238095, 15.2381, 10.2381, -0.238095, -15.2381, -10.2381, 0.238095, -15.2381)
+
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_o8c3j"]
-points = PackedVector3Array(10, 0, 15, -10, 0, 15, 10, 0, -15, -10, 0, -15)
+points = PackedVector3Array(-10.2381, -0.238095, -15.2381, 10.2381, 0.238095, 15.2381, 10.2381, -0.238095, 15.2381, 10.2381, 0.238095, -15.2381, -10.2381, 0.238095, 15.2381, -10.2381, -0.238095, 15.2381, 10.2381, -0.238095, -15.2381, -10.2381, 0.238095, -15.2381)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_44gv1"]
 size = Vector2(20, 30)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0ljxa"]
-points = PackedVector3Array(10, 0, 15, -10, 0, 15, 10, 0, -15, -10, 0, -15)
 
 [node name="Level3" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_44gv1")
 
-[node name="Ground" type="StaticBody3D" parent="WorldEnvironment"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="WorldEnvironment/Ground"]
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Ground"]
 transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, -17, 7, 0)
 mesh = SubResource("PlaneMesh_rkukh")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="WorldEnvironment/Ground/MeshInstance3D2"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90735e-06, -4.76837e-07, 0)
+shape = SubResource("ConvexPolygonShape3D_rkukh")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/Ground/MeshInstance3D2/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, -17, 7, 0)
 shape = SubResource("ConvexPolygonShape3D_o8c3j")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="WorldEnvironment/Ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Ground"]
 mesh = SubResource("PlaneMesh_44gv1")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="WorldEnvironment/Ground/MeshInstance3D3"]
+[node name="Player" parent="." instance=ExtResource("1_o8c3j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 9, 4)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/Ground/MeshInstance3D3/StaticBody3D"]
-shape = SubResource("ConvexPolygonShape3D_0ljxa")
+[node name="Restarter" parent="." instance=ExtResource("2_44gv1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
