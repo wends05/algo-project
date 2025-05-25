@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"bellman_ford_server/structs"
+	"bellman_ford_server/utils"
 	"fmt"
 	"math"
 	"net/http"
@@ -15,7 +16,13 @@ type BellmanFordInput struct {
 	NumberOfVertices int            `json:"number_of_vertices"`
 	Edges            []structs.Edge `json:"edges" binding:"dive"`
 	StartVertex      int            `json:"start_vertex" binding:"min=0"`
-	EndVertex        int            `json:"end_vertex" binding:"required"`
+	EndVertex        int            `json:"end_vertex" binding:"min=0"`
+}
+
+type BellmanFordResponse struct {
+	Distance         int   `json:"distance"`
+	Path             []int `json:"path"`
+	HasNegativeCycle bool  `json:"has_negative_cycle" `
 }
 
 func BellmanFord(c *gin.Context) {
@@ -52,7 +59,7 @@ func BellmanFord(c *gin.Context) {
 	// Check if the start and end vertices are the same
 	if data.StartVertex == data.EndVertex {
 		c.JSON(http.StatusBadRequest, structs.ErrorResponse{
-			Error:   "Invalid game state",
+			Error:   "Start and end vertices cannot be the same",
 			Message: "Start vertex and end vertex cannot be the same according to game rules.",
 		})
 		return
@@ -72,72 +79,25 @@ func BellmanFord(c *gin.Context) {
 			edge.Target < 0 || edge.Target >= data.NumberOfVertices {
 			c.JSON(http.StatusBadRequest, structs.ErrorResponse{
 				Error:   "Invalid edge",
-				Message: fmt.Sprintf("Edge with source %v, target %v, weight %v contains invalid vertex index", edge.Source, edge.Target, edge.Weight),
+				Message: fmt.Sprintf("Edge from %v to %v with a weight of %v contains invalid vertex index", edge.Source, edge.Target, edge.Weight),
 			})
 			return
 		}
 	}
+	// Run Bellman-Ford algorithm using utility function
+	result := utils.RunBellmanFord(data.Edges, data.NumberOfVertices, data.StartVertex)
 
-	// initialize distances array
-
-	distances := make([]int, data.NumberOfVertices)
-	predecessor := make([]int, data.NumberOfVertices)
-
-	// distances[data.StartVertex] = 0 // This line is redundant
-	for i := range data.NumberOfVertices {
-		distances[i] = math.MaxInt32
-		predecessor[i] = -1
+	// Check for negative cycles
+	if result.HasNegativeCycle {
+		c.JSON(http.StatusBadRequest, structs.ErrorResponse{
+			Error:   "Negative cycle detected",
+			Message: "The graph contains a negative cycle, making pathfinding impossible.",
+		})
+		return
 	}
 
-	// set the distance to the start vertex to 0
-	distances[data.StartVertex] = 0
-
-	// Log initial state
-	fmt.Printf("Initial distances: %v\n", distances)
-	fmt.Printf("Initial predecessors: %v\n", predecessor)
-
-	// relax edges V - 1 times
-	for range data.NumberOfVertices - 1 {
-
-		relaxedInThisIteration := false
-
-		for _, edge := range data.Edges {
-			fmt.Printf("Relaxing edge: %v\n", edge)
-			if distances[edge.Source] != math.MaxInt32 &&
-				distances[edge.Source]+edge.Weight < distances[edge.Target] {
-				distances[edge.Target] = distances[edge.Source] + edge.Weight
-				predecessor[edge.Target] = edge.Source
-				println("Relaxing edge:", edge.Source, "->", edge.Target, "with weight", edge.Weight)
-				println("New distances to vertex", edge.Target, ":", distances[edge.Target])
-
-				relaxedInThisIteration = true
-			} else {
-				println("cannot relax this edge")
-			}
-		}
-
-		// If no edges were relaxed in an entire iteration, distances have converged
-		if !relaxedInThisIteration {
-			fmt.Println("Distances converged early.")
-			break
-		}
-	}
-
-	fmt.Printf("Distances after relaxation: %v\n", distances)
-	fmt.Printf("Predecessors after relaxation: %v\n", predecessor)
-
-	// assuming everything is already okay, check for negative cycles
-
-	for _, edge := range data.Edges {
-		if distances[edge.Source] != math.MaxInt32 &&
-			distances[edge.Source]+edge.Weight < distances[edge.Target] {
-			c.JSON(http.StatusBadRequest, structs.ErrorResponse{Error: "Negative cycle detected"})
-			return
-		}
-	}
-
-	// check if the end vertex is reachable
-	if distances[data.EndVertex] == math.MaxInt32 {
+	// Check if the end vertex is reachable
+	if result.Distances[data.EndVertex] == math.MaxInt32 {
 		c.JSON(http.StatusBadRequest, structs.ErrorResponse{
 			Error:   "No path found",
 			Message: "End vertex is not reachable from start vertex",
@@ -145,8 +105,8 @@ func BellmanFord(c *gin.Context) {
 		return
 	}
 
-	// reconstruct the path
-	path := buildPath(data.StartVertex, data.EndVertex, predecessor)
+	// Reconstruct the path
+	path := utils.BuildPath(data.StartVertex, data.EndVertex, result.Predecessors)
 
 	if len(path) == 0 {
 		// This indicates an inconsistency: the end vertex was marked reachable,
@@ -158,32 +118,8 @@ func BellmanFord(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"distance": distances[data.EndVertex],
-		"path":     path,
+	c.JSON(http.StatusOK, BellmanFordResponse{
+		Distance: result.Distances[data.EndVertex],
+		Path:     path,
 	})
-}
-
-// buildPath reconstructs the shortest path from the predecessor array.
-func buildPath(startVertex int, endVertex int, predecessor []int) []int {
-	path := []int{}
-	current := endVertex
-
-	// Traverse backwards from the end vertex using predecessors
-	for current != -1 {
-		path = append([]int{current}, path...) // Prepend current vertex to build path in correct order
-		if current == startVertex {
-			break // Stop if we reached the start vertex
-		}
-		current = predecessor[current]
-	}
-
-	// If the path doesn't start with the start vertex (and it should if reachable),
-	// it indicates an issue or an unreachable path segment.
-	// This check is mostly for robustness; the algorithm should prevent this.
-	if len(path) > 0 && path[0] != startVertex {
-		return []int{} // Return empty path if it's malformed
-	}
-
-	return path
 }

@@ -7,48 +7,33 @@ import (
 	"strconv"
 
 	"bellman_ford_server/structs"
+	"bellman_ford_server/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
-type Edge struct {
-	Source int `json:"source"`
-	Target int `json:"target"`
-	Weight int `json:"weight"`
-}
-
 type GraphResponse struct {
-	Vertices      int    `json:"vertices"`
-	Edges         []Edge `json:"edges"`
-	NumberOfEdges int    `json:"number_of_edges"`
+	NumberOfVertices int            `json:"number_of_vertices"`
+	Edges            []structs.Edge `json:"edges" binding:"dive"`
+	NumberOfEdges    int            `json:"number_of_edges"`
 }
 
-// GenerateRandomGraph generates a random graph with no negative cycles
-
+// GenerateRandomGraph generates a random graph with no negative cycles.
+//
 // parameters:
 // - vertices: number of vertices in the graph (required)
 // - weight_range: range of weights for the edges (optional, default is 100)
 // - start_vertex: starting vertex for pathfinding (optional, default is 0)
 // - end_vertex: ending vertex for pathfinding (optional, default is vertices-1)
-
 func GenerateRandomGraph(c *gin.Context) {
 	// Get number of vertices from query parameter
-	verticesStr := c.Query("vertices")
+	verticesStr := c.Query("number_of_vertices")
 	if verticesStr == "" {
 		c.JSON(http.StatusBadRequest, structs.ErrorResponse{
-			Error: "vertices parameter is required",
+			Error: "number_of_vertices parameter is required",
 		})
 		return
 	}
-
-	// Get weight range from query parameter, default to 100
-	weightRangeStr := c.Query("weight_range")
-	if weightRangeStr == "" {
-		weightRangeStr = "100"
-	}
-
-	startVertexStr := c.Query("start_vertex")
-	endVertexStr := c.Query("end_vertex")
 
 	// convert vertices to integer
 	vertices, err := strconv.Atoi(verticesStr)
@@ -59,20 +44,11 @@ func GenerateRandomGraph(c *gin.Context) {
 		return
 	}
 
-	// convert weight range to integer
-	weightRange, err := strconv.Atoi(weightRangeStr)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, structs.ErrorResponse{
-			Error: "weight_range must be a valid integer",
-		})
-		return
-	}
-
 	// vertices should be at least 3
 	if vertices < 2 {
 		c.JSON(http.StatusBadRequest, structs.ErrorResponse{
-			Error:   "vertices must be at least 1",
-			Message: "Number of vertices must be at least 2 for pathfinding between distinct points.",
+			Error:   "vertices must be at least 3",
+			Message: "Number of vertices must be at least 3 for pathfinding between distinct points.",
 		})
 		return
 	}
@@ -84,6 +60,25 @@ func GenerateRandomGraph(c *gin.Context) {
 		})
 		return
 	}
+
+	// Get weight range from query parameter, default to 100
+	weightRangeStr := c.Query("weight_range")
+	if weightRangeStr == "" {
+		weightRangeStr = "100"
+	}
+
+	// convert weight range to integer
+	weightRange, err := strconv.Atoi(weightRangeStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, structs.ErrorResponse{
+			Error: "weight_range must be a valid integer",
+		})
+		return
+	}
+
+	startVertexStr := c.Query("start_vertex")
+	endVertexStr := c.Query("end_vertex")
+
 
 	// Parse start and end vertices, if provided
 	var startVertex, endVertex int
@@ -143,17 +138,17 @@ func GenerateRandomGraph(c *gin.Context) {
 	edges := generateGraph(vertices, weightRange)
 
 	response := GraphResponse{
-		Vertices:      vertices,
-		Edges:         edges,
-		NumberOfEdges: len(edges),
+		NumberOfVertices: vertices,
+		Edges:            edges,
+		NumberOfEdges:    len(edges),
 	}
 
 	c.JSON(http.StatusOK, response)
 }
 
 // generateGraph creates a random graph with no negative cycles where all vertices are reachable
-func generateGraph(vertices, weightRange int) []Edge {
-	var edges []Edge
+func generateGraph(vertices, weightRange int) []structs.Edge {
+	var edges []structs.Edge
 	edgeSet := make(map[string]bool)
 
 	// First, create a connected backbone to ensure all vertices are reachable
@@ -164,8 +159,8 @@ func generateGraph(vertices, weightRange int) []Edge {
 		edgeKey := strconv.Itoa(source) + "-" + strconv.Itoa(target)
 
 		if !edgeSet[edgeKey] {
-			weight := rand.Intn(2*weightRange+1) - weightRange // Weight between -100 and 100
-			edge := Edge{
+			weight := rand.Intn(2*weightRange+1) - weightRange
+			edge := structs.Edge{
 				Source: source,
 				Target: target,
 				Weight: weight,
@@ -176,13 +171,12 @@ func generateGraph(vertices, weightRange int) []Edge {
 	}
 
 	// Calculate additional edges to add (between 0 and remaining possible edges)
-
 	maxPossibleEdges := vertices * (vertices - 1)
 	currentEdges := len(edges)
 	maxAdditionalEdges := maxPossibleEdges - currentEdges
 
 	if maxAdditionalEdges > 0 {
-		numAdditionalEdgesToAdd := rand.Intn(maxAdditionalEdges/2 + 1) // Add up to half of remaining possible edges
+		numAdditionalEdgesToAdd := rand.Intn(maxAdditionalEdges/2 + 1)
 
 		// Add random additional edges
 		for range numAdditionalEdgesToAdd {
@@ -220,20 +214,27 @@ func generateGraph(vertices, weightRange int) []Edge {
 			}
 
 			// If we couldn't find a unique edge after many attempts, skip this iteration
-			if attempts > 100 {
+			if attempts > maxAttempts {
 				continue
 			}
 
-			// Generate weight that can be negative or positive
-			weight := rand.Intn(2*weightRange+1) - weightRange // Weight between -100 and 100
-			edge := Edge{
+			// Generate weight and check for negative cycles
+			weight := rand.Intn(2*weightRange+1) - weightRange
+
+			// Create temporary edge to test
+			testEdge := structs.Edge{
 				Source: source,
 				Target: target,
 				Weight: weight,
 			}
 
-			edges = append(edges, edge)
-			edgeSet[edgeKey] = true
+			// Test if adding this edge creates a negative cycle
+			tempEdges := append(edges, testEdge)
+			if !utils.HasNegativeCycle(tempEdges, vertices) {
+				edges = tempEdges
+				edgeSet[edgeKey] = true
+			}
+			// If it creates a negative cycle, skip this edge and try another
 		}
 	}
 
