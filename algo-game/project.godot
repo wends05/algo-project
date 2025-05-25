@@ -11,14 +11,15 @@ config_version=5
 [application]
 
 config/name="New Game Project"
-run/main_scene="uid://pxtljvhi4ti5"
+run/main_scene="uid://be2u7tm373xxs"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-global="*res://scripts/global.gd"
-utils="*res://scripts/utils.gd"
+Global="*res://scripts/global.gd"
+Utils="*res://scripts/utils.gd"
+Game="*res://scripts/game.gd"
 
 [display]
 
@@ -26,6 +27,10 @@ window/size/viewport_width=1512
 window/size/viewport_height=982
 window/size/mode=4
 window/stretch/mode="canvas_items"
+
+[gui]
+
+fonts/dynamic_fonts/use_oversampling=false
 
 [input]
 

@@ -5,9 +5,6 @@ extends Area3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# check if there is a spawn variable
-	if spawn == Vector3.ZERO:
-		print("No spawn point set for restarter")
 	
 	# attempt to use the initial position of the player node
 	if get_parent_node_3d():

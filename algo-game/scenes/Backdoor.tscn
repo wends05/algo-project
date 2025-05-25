@@ -1,25 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://lp5ibftbl8au"]
+[gd_scene load_steps=5 format=3 uid="uid://bj7dx1rkh453d"]
 
-[ext_resource type="PackedScene" uid="uid://cp4ux71g485mb" path="res://blends/door.blend" id="1_hpvv5"]
-[ext_resource type="Script" uid="uid://dsy2w5ptmnl1e" path="res://scripts/door.gd" id="2_uvdjg"]
+[ext_resource type="PackedScene" uid="uid://cp4ux71g485mb" path="res://blends/door.blend" id="1_okxap"]
+[ext_resource type="Script" uid="uid://bipr3r3vajx" path="res://scripts/backdoor.gd" id="2_85row"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_eyv6f"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_8cewi"]
 size = Vector3(1, 3, 0.5)
 
-[sub_resource type="FontFile" id="FontFile_uvdjg"]
+[sub_resource type="FontFile" id="FontFile_okxap"]
 subpixel_positioning = 0
 msdf_pixel_range = 14
 msdf_size = 128
-cache/0/32/0/ascent = 0.0
-cache/0/32/0/descent = 0.0
-cache/0/32/0/underline_position = 0.0
-cache/0/32/0/underline_thickness = 0.0
-cache/0/32/0/scale = 1.0
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
 cache/0/100/0/ascent = 0.0
 cache/0/100/0/descent = 0.0
 cache/0/100/0/underline_position = 0.0
@@ -31,28 +31,26 @@ cache/0/50/0/underline_position = 0.0
 cache/0/50/0/underline_thickness = 0.0
 cache/0/50/0/scale = 1.0
 
-[node name="Door" instance=ExtResource("1_hpvv5")]
-script = ExtResource("2_uvdjg")
+[node name="Backdoor" instance=ExtResource("1_okxap")]
+script = ExtResource("2_85row")
 
-[node name="Player Detector" type="Area3D" parent="." index="0"]
+[node name="Player Detector" type="Area3D" parent="." index="1"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player Detector" index="0"]
-shape = SubResource("BoxShape3D_eyv6f")
-
-[node name="Plane" parent="." index="1"]
-transform = Transform3D(1, 0, -1.04308e-07, 0, 1, 0, 1.04308e-07, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_8cewi")
 
 [node name="WeightLabel" type="Label3D" parent="." index="2"]
-transform = Transform3D(1, 0, 1.49012e-08, 0, 1, 0, -1.49012e-08, 0, 1, 0, 0, 0.025)
+transform = Transform3D(1, 0, 1.49012e-08, 0, 1, 0, -1.49012e-08, 0, 1, 0, 3, 0)
 pixel_size = 0.01
 text = "0"
+font = SubResource("FontFile_okxap")
 font_size = 100
 
 [node name="ToLabel" type="Label3D" parent="." index="3"]
 transform = Transform3D(1, 0, 1.49012e-08, 0, 1, 0, -1.49012e-08, 0, 1, 0, 2.34803, 0)
 pixel_size = 0.01
 text = "to: "
-font = SubResource("FontFile_uvdjg")
+font = SubResource("FontFile_okxap")
 font_size = 50
 
 [connection signal="body_entered" from="Player Detector" to="." method="_on_player_detector_body_entered"]
