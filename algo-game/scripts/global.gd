@@ -5,33 +5,33 @@ var shift_locked: bool = false
 var in_game: bool = false
 
 var number_of_vertices: int = 7
-var start_vertex = 0
-var end_vertex = 0
+var start_vertex: int = 0
+var end_vertex: int = 6
 
 var weight_range: int = 14
 
 var _graph = {}
 
+var _bellman_ford_result = {}
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
 
-func http_request_complete(_result, _response_code, _headers, body):
-	var json = JSON.new()
-	json.parse(body.get_string_from_utf8())
-	var response = json.get_data()
-	
-
-	printt("Graph data received: %s" % response)
-
-func set_graph(data):
+func set_graph(data) -> void:
+	for edge in data["edges"]:
+		edge["source"] = int(edge["source"])
+		edge["target"] = int(edge["target"])
+		edge["weight"] = int(edge["weight"])
 	_graph = data
-	print_debug("Graph edited: ", self._graph)
 
 func get_graph():
 	return _graph
+
+func set_bellman_ford_result(data) -> void:
+	var converted_path = []
+	for v in data["path"]:
+		converted_path.append(int(v))
+	data["path"] = converted_path
+	_bellman_ford_result = data
+
+func get_bellman_ford_result():
+	return _bellman_ford_result
