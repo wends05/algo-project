@@ -26,8 +26,8 @@ glow_enabled = true
 [sub_resource type="BoxMesh" id="BoxMesh_qcat7"]
 size = Vector3(20, 1, 40)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_l37oo"]
-points = PackedVector3Array(10, 0.5, 20, 10, -0.5, 20, 10, 0.5, -20, -10, 0.5, 20, -10, -0.5, 20, 10, -0.5, -20, -10, 0.5, -20, -10, -0.5, -20)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ibugp"]
+points = PackedVector3Array(-10.3175, -0.81746, -20.3095, 10.6349, 1.0873, 20.3095, 10.6349, -0.81746, 20.3095, 10.6349, 1.0873, -20.3095, -10.3175, 1.0873, 20.3095, -10.3175, -0.81746, 20.3095, 10.6349, -0.81746, -20.3095, -10.3175, 1.0873, -20.3095)
 
 [node name="Level 2" type="Node3D" node_paths=PackedStringArray("doors_node", "backdoor_node")]
 script = ExtResource("1_ibugp")
@@ -52,7 +52,7 @@ mesh = SubResource("BoxMesh_qcat7")
 [node name="StaticBody3D" type="StaticBody3D" parent="Ground/MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConvexPolygonShape3D_l37oo")
+shape = SubResource("ConvexPolygonShape3D_ibugp")
 
 [node name="Objects" type="Node3D" parent="."]
 transform = Transform3D(0.75, 0.5, 0.433013, -0.433013, 0.866025, -0.25, -0.5, 0, 0.866025, -9, 2, 34)
@@ -76,19 +76,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20, 0)
 script = ExtResource("5_8qukl")
 
 [node name="Position 1" type="Node3D" parent="Doors"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 2, 15)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 2.5, 15)
 
 [node name="Door" parent="Doors/Position 1" instance=ExtResource("3_l37oo")]
 
 [node name="Position 2" type="Node3D" parent="Doors"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5, 2, 15)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5, 2.5, 15)
 
 [node name="Door" parent="Doors/Position 2" instance=ExtResource("3_l37oo")]
 
 [node name="Position 3" type="Node3D" parent="Doors"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -5, 2, 15)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -5, 2.5, 15)
 
 [node name="Door" parent="Doors/Position 3" instance=ExtResource("3_l37oo")]
 
 [node name="Backdoor" parent="." instance=ExtResource("5_l37oo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -12)

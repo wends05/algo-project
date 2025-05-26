@@ -11,6 +11,6 @@ func set_edge(edge_data: Dictionary) -> void:
 	edge = edge_data
 	if edge:
 		$WeightLabel.text = "%s" % int(edge["weight"])
-		$ToLabel.text = "to: %s" % (int(edge["source"]) + 1)
+		$ToLabel.text = "%s" % (int(edge["source"]) + 1)
 	else:
 		print("Edge data is not set for this backdoor.")
