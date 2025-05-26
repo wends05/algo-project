@@ -3,7 +3,7 @@ extends Node
 # game settings
 var number_of_vertices: int = 7
 var start_vertex: int = 0
-var end_vertex: int = 6
+var end_vertex: int = 5
 
 var weight_range: int = 15
 var max_energy: int = 100
@@ -13,35 +13,59 @@ var _graph: Dictionary = {}
 var _bellman_ford_result: Dictionary = {}
 
 # current game progress
+var randomized_levels: Array = []
 var progress: Array[int] = [start_vertex]
-var current_level: int = 0
 var current_energy: int = max_energy
+
+func _ready() -> void:
+	randomized_levels = randomize_levels()
+
+	print("Game initialized:")
+	print("Randomized Levels:", randomized_levels)
+
+func randomize_levels():
+	randomized_levels = range(1, number_of_vertices + 1)
+	randomized_levels.shuffle()
+
+	# ensure that the end vertex is not the first one
+	if randomized_levels[0] == end_vertex:
+		var temp = randomized_levels[0]
+		randomized_levels[0] = randomized_levels[1]
+		randomized_levels[1] = temp
+	
+	return randomized_levels
+
+func get_index_of_level(level_number: int) -> int:
+	return randomized_levels.find(level_number)
+
+func get_level_at_index(level_index: int) -> int:
+	return randomized_levels[level_index]
 
 func forward(to: int, energy_consumed: int):
 	progress.append(to)
-	current_level = to
 	current_energy = current_energy - energy_consumed
 
 	print("\n=====\nFORWARD")
 	print("Progress:", progress)
-	print("Current Level:", current_level)
 	print("Current Energy:", current_energy)
 	print("=====\n")
 
-	Utils.change_scene("res://scenes/levels/level_%s.tscn" % (to + 1))
+	var level_to = get_level_at_index(to)
+	Utils.change_scene("res://scenes/levels/level_%s.tscn" % level_to)
 
 func backward(returned_energy: int):
 	progress.pop_back()
-	current_level = progress[-1] if progress.size() > 0 else start_vertex
+	var to = progress[-1] if progress.size() > 0 else start_vertex
 	current_energy = current_energy + returned_energy
 	
 	print("\n=====\nBACKWARD")
 	print("Progress:", progress)
-	print("Current Level:", current_level)
+	print("To:", to)
 	print("Current Energy:", current_energy)
 	print("=====\n")
 	
-	Utils.change_scene("res://scenes/levels/level_%s.tscn" % (current_level + 1))
+	var level_to = get_level_at_index(to)
+	Utils.change_scene("res://scenes/levels/level_%s.tscn" % level_to)
 
 func set_graph(data) -> void:
 	for edge in data["edges"]:
