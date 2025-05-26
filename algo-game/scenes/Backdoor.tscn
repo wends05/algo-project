@@ -39,18 +39,17 @@ script = ExtResource("2_85row")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player Detector" index="0"]
 shape = SubResource("BoxShape3D_8cewi")
 
-[node name="WeightLabel" type="Label3D" parent="." index="2"]
-transform = Transform3D(1, 0, 1.49012e-08, 0, 1, 0, -1.49012e-08, 0, 1, 0, 3, 0)
-pixel_size = 0.01
-text = "0"
-font = SubResource("FontFile_okxap")
-font_size = 100
-
-[node name="ToLabel" type="Label3D" parent="." index="3"]
+[node name="ToLabel" type="Label3D" parent="." index="2"]
 transform = Transform3D(1, 0, 1.49012e-08, 0, 1, 0, -1.49012e-08, 0, 1, 0, 2.34803, 0)
 pixel_size = 0.01
 text = "to: "
 font = SubResource("FontFile_okxap")
 font_size = 50
+
+[node name="WeightLabel" type="Label3D" parent="." index="3"]
+transform = Transform3D(1, 0, 1.49012e-08, 0, 1, 0, -1.49012e-08, 0, 1, 0, 0, 0.025)
+pixel_size = 0.01
+text = "0"
+font_size = 100
 
 [connection signal="body_entered" from="Player Detector" to="." method="_on_player_detector_body_entered"]

@@ -112,10 +112,9 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 13, 2.
 [node name="Door" parent="Doors/Position 2" instance=ExtResource("3_w6h2s")]
 
 [node name="Position 3" type="Node3D" parent="Doors"]
-transform = Transform3D(-2.78182e-08, 0, -1, 0, 1, 0, 1, 0, -2.78182e-08, 7, 2.5, -6)
+transform = Transform3D(-2.78182e-08, 0, -1, 0, 1, 0, 1, 0, -2.78182e-08, 13, 2.5, -6)
 
-[node name="Door" parent="Doors/Position 3" instance=ExtResource("3_w6h2s")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76837e-07, 0, -6)
+[node name="Door2" parent="Doors/Position 3" instance=ExtResource("3_w6h2s")]
 
 [node name="Backdoor" parent="." instance=ExtResource("6_ts8eg")]
 transform = Transform3D(-4.47035e-08, 0, 1, 0, 1, 0, -1, 0, -4.47035e-08, -9, 2, 0)
