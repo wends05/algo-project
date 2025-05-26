@@ -9,7 +9,8 @@ var level_index: int
 
 func _ready() -> void:
 	# find index level from the name
-	level_index = int(name.split(" ")[1]) - 1
+	var level_number = int(name.split(" ")[1])
+	level_index = Game.get_index_of_level(level_number)
 	print("Level index: ", level_index)
 	
 
@@ -26,11 +27,11 @@ func _ready() -> void:
 			return
 		initialize_backdoor()
 	else:
-		backdoor_node = null
+		backdoor_node.queue_free()
 		print("No backdoor for level %d." % level_index)
 	
 	initialize_doors()
-
+	
 
 func initialize_doors():
 	var edges: Array = Game.get_doors(level_index)

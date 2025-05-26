@@ -13,4 +13,5 @@ func _ready():
 
 func _on_player_detector_body_entered(body: Node3D) -> void:
 	if body is Player:
+		print("Door entered: ", JSON.stringify(edge, "\t"))
 		Game.forward(edge["target"], edge["weight"])
