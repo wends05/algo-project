@@ -91,6 +91,3 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 8, 2.5
 transform = Transform3D(-2.78182e-08, 0, -1, 0, 1, 0, 1, 0, -2.78182e-08, 7, 2.5, -6)
 
 [node name="Door" parent="Doors/Position 3" instance=ExtResource("3_0ljxa")]
-
-[node name="Backdoor" parent="." instance=ExtResource("4_fkk1g")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20, 13.7385, 0)

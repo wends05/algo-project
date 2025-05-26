@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cc8ikswqkg3ti"]
+[gd_scene load_steps=15 format=3 uid="uid://cc8ikswqkg3ti"]
 
 [ext_resource type="PackedScene" uid="uid://0jipqcsji7bb" path="res://scenes/Player.tscn" id="1_06474"]
 [ext_resource type="Script" uid="uid://ddq2w3ucuk6cy" path="res://scripts/levels/level.gd" id="1_rej77"]
@@ -33,6 +33,9 @@ size = Vector3(5, 2, 20)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_w6h2s"]
 points = PackedVector3Array(2.5, 1, 10, 2.5, -1, 10, 2.5, 1, -10, -2.5, 1, 10, -2.5, -1, 10, 2.5, -1, -10, -2.5, 1, -10, -2.5, -1, -10)
 
+[sub_resource type="PrismMesh" id="PrismMesh_rej77"]
+size = Vector3(4, 4, 4)
+
 [node name="Level 4" type="Node3D" node_paths=PackedStringArray("doors_node", "backdoor_node")]
 script = ExtResource("1_rej77")
 doors_node = NodePath("Doors")
@@ -47,7 +50,7 @@ light_color = Color(0.840068, 0.4508, 0, 1)
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_06474")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 5, 0)
 
 [node name="Ground" type="Node3D" parent="."]
 
@@ -70,6 +73,26 @@ shape = SubResource("ConvexPolygonShape3D_w6h2s")
 
 [node name="Objects" type="Node3D" parent="."]
 transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -9, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects"]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 17.3359, 0, 6.7429)
+mesh = SubResource("PrismMesh_rej77")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Objects"]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, -4.8804, 3, 12.6957)
+mesh = SubResource("PrismMesh_rej77")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Objects"]
+transform = Transform3D(0.696276, -0.669934, -0.257658, 0.475615, 0.699469, -0.533416, 0.537577, 0.248859, 0.805655, 11.8499, 0, -2.1399)
+mesh = SubResource("PrismMesh_rej77")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Objects"]
+transform = Transform3D(0.547667, 0.836516, -0.0173376, -0.75, 0.5, 0.433012, 0.370891, -0.224144, 0.901221, -10.3664, -3, 3.81293)
+mesh = SubResource("PrismMesh_rej77")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Objects"]
+transform = Transform3D(0.547667, 0.836516, -0.0173375, -0.75, 0.5, 0.433012, 0.370891, -0.224144, 0.901221, -8.19427, -3, -11.2629)
+mesh = SubResource("PrismMesh_rej77")
 
 [node name="Restarter" parent="." instance=ExtResource("2_vmkp1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
@@ -95,4 +118,4 @@ transform = Transform3D(-2.78182e-08, 0, -1, 0, 1, 0, 1, 0, -2.78182e-08, 7, 2.5
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76837e-07, 0, -6)
 
 [node name="Backdoor" parent="." instance=ExtResource("6_ts8eg")]
-transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -9, 2, 0)
+transform = Transform3D(-4.47035e-08, 0, 1, 0, 1, 0, -1, 0, -4.47035e-08, -9, 2, 0)
