@@ -70,6 +70,9 @@ shape = SubResource("ConvexPolygonShape3D_fmg3e")
 [node name="Restarter" parent="." instance=ExtResource("2_44gv1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
 
+[node name="Backdoor" parent="." instance=ExtResource("4_fkk1g")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20, 13.7385, 0)
+
 [node name="Doors" type="Node3D" parent="."]
 script = ExtResource("5_ugcn1")
 
