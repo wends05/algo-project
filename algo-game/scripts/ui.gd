@@ -32,4 +32,5 @@ func _on_restart_pressed() -> void:
 
 
 func _on_quit_pressed() -> void:
+	unpause()
 	Utils.change_scene("res://scenes/main/main_menu.tscn")
