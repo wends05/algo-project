@@ -16,6 +16,7 @@ func main() {
 	}
 	router := gin.Default()
 
+	router.GET("/", c.Root)
 	router.POST("/bellmanford", c.BellmanFord)
 
 	router.GET("/graph", c.GenerateRandomGraph)
