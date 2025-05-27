@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cx8tmah6eurqf"]
+[gd_scene load_steps=21 format=3 uid="uid://cx8tmah6eurqf"]
 
 [ext_resource type="Script" uid="uid://ddq2w3ucuk6cy" path="res://scripts/levels/level.gd" id="1_5wshb"]
 [ext_resource type="PackedScene" uid="uid://0jipqcsji7bb" path="res://scenes/Player.tscn" id="1_i0fhw"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dhtbml4j4ieor" path="res://scripts/doors.gd" id="3_7x7cx"]
 [ext_resource type="PackedScene" uid="uid://lp5ibftbl8au" path="res://scenes/Door.tscn" id="4_b6i88"]
 [ext_resource type="PackedScene" uid="uid://bj7dx1rkh453d" path="res://scenes/Backdoor.tscn" id="5_e18e5"]
+[ext_resource type="PackedScene" uid="uid://rlgyii1ndy7k" path="res://scenes/ui.tscn" id="7_7x7cx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ncucs"]
 sky_top_color = Color(0.427451, 0.0941176, 0.0705882, 1)
@@ -66,8 +67,9 @@ environment = SubResource("Environment_y2agi")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("1_i0fhw")]
+[node name="Player" parent="." node_paths=PackedStringArray("UI") instance=ExtResource("1_i0fhw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+UI = NodePath("../CanvasLayer/UI")
 
 [node name="Ground" type="Node3D" parent="."]
 
@@ -139,6 +141,7 @@ shape = SubResource("ConvexPolygonShape3D_uwlxl")
 [node name="Objects" type="Node3D" parent="."]
 
 [node name="Restarter" parent="." instance=ExtResource("2_5wshb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 
 [node name="Doors" type="Node3D" parent="."]
 script = ExtResource("3_7x7cx")
@@ -162,3 +165,10 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -12, 12.5, -14)
 
 [node name="Backdoor" parent="." instance=ExtResource("5_e18e5")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.96138, 8)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+follow_viewport_enabled = true
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("7_7x7cx")]
+metadata/_edit_use_anchors_ = true

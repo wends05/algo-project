@@ -5,7 +5,6 @@ extends Area3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
 	# attempt to use the initial position of the player node
 	if get_parent_node_3d():
 		var player := get_parent_node_3d().find_child("Player")
@@ -16,13 +15,6 @@ func _ready() -> void:
 	if !spawn:
 		printerr("There is no spawn created")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
 func _on_body_entered(body: Node3D) -> void:
-	print(body)
 	if body is Player:
-		print_debug("Player detectedw")
 		body.position = spawn

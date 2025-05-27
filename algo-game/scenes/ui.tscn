@@ -1,0 +1,112 @@
+[gd_scene load_steps=6 format=3 uid="uid://rlgyii1ndy7k"]
+
+[ext_resource type="Script" uid="uid://3xl2tjkwrbb6" path="res://scripts/ui.gd" id="1_nt7q6"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_nt7q6"]
+device = -1
+pressed = true
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_x4jx1"]
+events = [SubResource("InputEventKey_nt7q6")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_x4jx1"]
+device = -1
+pressed = true
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_yev5y"]
+events = [SubResource("InputEventKey_x4jx1")]
+
+[node name="UI" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_nt7q6")
+
+[node name="Bounds" type="Control" parent="."]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = 25.0
+offset_right = -25.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Bounds"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Pause Button" type="Button" parent="Bounds/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+shortcut = SubResource("Shortcut_x4jx1")
+text = "Pause"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Bounds/VBoxContainer"]
+layout_mode = 2
+fit_content = true
+
+[node name="Pause Screen" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Pause Screen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.396078)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Pause Screen"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Return" type="Button" parent="Pause Screen/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+shortcut = SubResource("Shortcut_yev5y")
+text = "Return"
+
+[node name="Restart" type="Button" parent="Pause Screen/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Restart"
+
+[node name="Quit" type="Button" parent="Pause Screen/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit
+"
+
+[connection signal="pressed" from="Bounds/VBoxContainer/Pause Button" to="." method="_on_pause_button_pressed"]
+[connection signal="pressed" from="Pause Screen/VBoxContainer/Return" to="." method="_on_return_pressed"]
+[connection signal="pressed" from="Pause Screen/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Pause Screen/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

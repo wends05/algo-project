@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dofh3ip4tgcea"]
+[gd_scene load_steps=14 format=3 uid="uid://dofh3ip4tgcea"]
 
 [ext_resource type="Script" uid="uid://ddq2w3ucuk6cy" path="res://scripts/levels/level.gd" id="1_ibugp"]
 [ext_resource type="PackedScene" uid="uid://0jipqcsji7bb" path="res://scenes/Player.tscn" id="1_r7620"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bmmchwharvst6" path="res://scenes/restarter.tscn" id="5_6e15f"]
 [ext_resource type="Script" uid="uid://dhtbml4j4ieor" path="res://scripts/doors.gd" id="5_8qukl"]
 [ext_resource type="PackedScene" uid="uid://bj7dx1rkh453d" path="res://scenes/Backdoor.tscn" id="5_l37oo"]
+[ext_resource type="PackedScene" uid="uid://rlgyii1ndy7k" path="res://scenes/ui.tscn" id="8_8qukl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r7620"]
 sky_top_color = Color(0.609474, 0.338977, 0.546982, 1)
@@ -41,8 +42,9 @@ environment = SubResource("Environment_p5t0n")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("1_r7620")]
+[node name="Player" parent="." node_paths=PackedStringArray("UI") instance=ExtResource("1_r7620")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2, 3, -6)
+UI = NodePath("../CanvasLayer/UI")
 
 [node name="Ground" type="Node3D" parent="."]
 
@@ -92,3 +94,10 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -5, 2.
 
 [node name="Backdoor" parent="." instance=ExtResource("5_l37oo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -12)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+follow_viewport_enabled = true
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("8_8qukl")]
+metadata/_edit_use_anchors_ = true

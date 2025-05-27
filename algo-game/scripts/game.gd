@@ -23,6 +23,8 @@ func _ready() -> void:
 	print("Game initialized:")
 	print("Randomized Levels:", randomized_levels)
 
+func restart():
+	pass
 func randomize_levels():
 	randomized_levels = range(1, number_of_vertices + 1)
 	randomized_levels.shuffle()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dkwx8qvxuwvs4"]
+[gd_scene load_steps=15 format=3 uid="uid://dkwx8qvxuwvs4"]
 
 [ext_resource type="Script" uid="uid://ddq2w3ucuk6cy" path="res://scripts/levels/level.gd" id="1_ftfob"]
 [ext_resource type="PackedScene" uid="uid://0jipqcsji7bb" path="res://scenes/Player.tscn" id="1_o8c3j"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://lp5ibftbl8au" path="res://scenes/Door.tscn" id="3_0ljxa"]
 [ext_resource type="PackedScene" uid="uid://bj7dx1rkh453d" path="res://scenes/Backdoor.tscn" id="4_fkk1g"]
 [ext_resource type="Script" uid="uid://dhtbml4j4ieor" path="res://scripts/doors.gd" id="5_ugcn1"]
+[ext_resource type="PackedScene" uid="uid://rlgyii1ndy7k" path="res://scenes/ui.tscn" id="7_fkk1g"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_rkukh"]
 rayleigh_color = Color(0.156264, 0.40581, 0.708987, 1)
@@ -43,8 +44,9 @@ environment = SubResource("Environment_44gv1")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("1_o8c3j")]
+[node name="Player" parent="." node_paths=PackedStringArray("UI") instance=ExtResource("1_o8c3j")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -15, 14, 0)
+UI = NodePath("../CanvasLayer/UI")
 
 [node name="Ground" type="Node3D" parent="."]
 
@@ -79,7 +81,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20, 1
 script = ExtResource("5_ugcn1")
 
 [node name="Position 1" type="Node3D" parent="Doors"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9, 2.5, 6)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 8, 2.5, 6)
 rotation_edit_mode = 2
 
 [node name="Door" parent="Doors/Position 1" instance=ExtResource("3_0ljxa")]
@@ -90,6 +92,13 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 8, 2.5
 [node name="Door" parent="Doors/Position 2" instance=ExtResource("3_0ljxa")]
 
 [node name="Position 3" type="Node3D" parent="Doors"]
-transform = Transform3D(-2.78182e-08, 0, -1, 0, 1, 0, 1, 0, -2.78182e-08, 7, 2.5, -6)
+transform = Transform3D(-2.78182e-08, 0, -1, 0, 1, 0, 1, 0, -2.78182e-08, 8, 2.5, -6)
 
 [node name="Door" parent="Doors/Position 3" instance=ExtResource("3_0ljxa")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+follow_viewport_enabled = true
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("7_fkk1g")]
+metadata/_edit_use_anchors_ = true

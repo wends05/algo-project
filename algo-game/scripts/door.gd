@@ -6,6 +6,8 @@ var edge: Dictionary = {}
 
 func _ready():
 	if edge:
+		print("Edge data is now set for this door.")
+		
 		$WeightLabel.text = "%s" % int(edge["weight"] * -1)
 		$ToLabel.text = "%d" % (int(edge["target"]) + 1)
 	else:

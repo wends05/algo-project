@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cc0cwcavpmmge"]
+[gd_scene load_steps=21 format=3 uid="uid://cc0cwcavpmmge"]
 
 [ext_resource type="Script" uid="uid://ddq2w3ucuk6cy" path="res://scripts/levels/level.gd" id="1_hldbq"]
 [ext_resource type="PackedScene" uid="uid://0jipqcsji7bb" path="res://scenes/Player.tscn" id="2_fsnos"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dhtbml4j4ieor" path="res://scripts/doors.gd" id="4_vvoq0"]
 [ext_resource type="PackedScene" uid="uid://lp5ibftbl8au" path="res://scenes/Door.tscn" id="5_tqnj0"]
 [ext_resource type="PackedScene" uid="uid://bj7dx1rkh453d" path="res://scenes/Backdoor.tscn" id="6_dwyms"]
+[ext_resource type="PackedScene" uid="uid://rlgyii1ndy7k" path="res://scenes/ui.tscn" id="7_fsnos"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hldbq"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -63,8 +64,9 @@ environment = SubResource("Environment_mxx4w")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("2_fsnos")]
+[node name="Player" parent="." node_paths=PackedStringArray("UI") instance=ExtResource("2_fsnos")]
 transform = Transform3D(-5.96046e-08, 0, -1, 0, 1, 0, 1, 0, -5.96046e-08, 0, 4, 0)
+UI = NodePath("../CanvasLayer/UI")
 
 [node name="Ground" type="Node3D" parent="."]
 
@@ -159,4 +161,11 @@ transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 
 [node name="Door3" parent="Doors/Position 3" instance=ExtResource("5_tqnj0")]
 
 [node name="Backdoor" parent="." instance=ExtResource("6_dwyms")]
-transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -9, 2, 0)
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -9, 2.5, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+follow_viewport_enabled = true
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("7_fsnos")]
+metadata/_edit_use_anchors_ = true

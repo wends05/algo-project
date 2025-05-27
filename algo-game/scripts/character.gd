@@ -11,14 +11,31 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var head = $Head
 @onready var head_camera = $Head/Camera3D
 
+@export var UI: UserInterface
+var was_shift_locked := false
+
 func _ready() -> void:
 	# fix camera
 	head_camera.rotation_degrees.x = -15.0
-
+	UI.paused.connect(update_mouse_mode)
+	UI.unpaused.connect(update_mouse_mode)
+	UI.unpaused.connect(game_unpaused)
 
 func _input(event) -> void:
 	if event.is_action_pressed("shift_lock"):
 		Global.shift_locked = !Global.shift_locked
+		was_shift_locked = Global.shift_locked
+
+func update_mouse_mode():
+	if Global.shift_locked:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func game_unpaused():
+	if was_shift_locked:
+		Global.shift_locked = !Global.shift_locked
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		if event.button_mask & MOUSE_BUTTON_MASK_LEFT or Global.shift_locked:
@@ -30,10 +47,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 			head_camera.rotation.x = clamp(head_camera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
-		if Global.shift_locked:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		else:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		update_mouse_mode()
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
