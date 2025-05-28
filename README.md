@@ -35,7 +35,12 @@ git clone https://github.com/wends05/algo-project.git
 cd bellman_ford_server
 ```
 
-2. Run the go server with
+2. Install Go modules and dependencies
+```
+go mod tidy
+```
+
+3. Run the go server with
 ```
 air 
 ```
@@ -46,12 +51,6 @@ go run .
 ```
 without any live reload
 
-
 ### Running the game
 1. Open godot engine and import the `algo_game` folder to godot
 2. Run the game with F5 (Windows) or Cmd+B (Mac)
-
-
-
-
-

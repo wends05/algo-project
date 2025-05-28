@@ -21,7 +21,7 @@ func HasNegativeCycle(edges []structs.Edge, vertices int) bool {
 	dist[0] = 0 // Start from vertex 0
 
 	// Relax edges vertices-1 times
-	for i := 0; i < vertices-1; i++ {
+	for range vertices-1 {
 		relaxed := false
 		for _, edge := range edges {
 			if dist[edge.Source] != math.MaxInt32 && 
@@ -113,8 +113,8 @@ func BuildPath(startVertex, endVertex int, predecessors []int) []int {
 		current = predecessors[current]
 	}
 
-	// If the path doesn't start with the start vertex, return empty path
-	if len(path) > 0 && path[0] != startVertex {
+	// If the path doesn't start with the start vertex, return empty path (no path exists)
+	if len(path) == 0 || path[0] != startVertex {
 		return []int{}
 	}
 
