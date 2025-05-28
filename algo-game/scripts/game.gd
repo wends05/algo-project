@@ -3,7 +3,7 @@ extends Node
 # game settings
 var number_of_vertices: int = 7
 var start_vertex: int = 0
-var end_vertex: int = 5
+var end_vertex: int = 6
 
 var weight_range: int = 15
 var max_energy: int = 100
@@ -15,7 +15,7 @@ var _bellman_ford_result: Dictionary = {}
 # current game progress
 var randomized_levels: Array = []
 var progress: Array[int] = [start_vertex]
-var current_energy: int = max_energy
+var current_energy: int = max_energy / 2
 
 func _ready() -> void:
 	randomized_levels = randomize_levels()
@@ -24,7 +24,12 @@ func _ready() -> void:
 	print("Randomized Levels:", randomized_levels)
 
 func restart():
-	pass
+	progress = [start_vertex]
+	current_energy = max_energy / 2
+	
+	Utils.change_scene("res://scenes/levels/level_%d.tscn" % Game.randomized_levels[0])
+
+
 func randomize_levels():
 	randomized_levels = range(1, number_of_vertices + 1)
 	randomized_levels.shuffle()

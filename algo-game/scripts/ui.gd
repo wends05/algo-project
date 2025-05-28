@@ -26,10 +26,9 @@ func _on_pause_button_pressed() -> void:
 func _on_return_pressed() -> void:
 	unpause()
 
-
 func _on_restart_pressed() -> void:
+	unpause()
 	Game.restart()
-
 
 func _on_quit_pressed() -> void:
 	unpause()

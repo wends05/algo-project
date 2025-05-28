@@ -7,7 +7,7 @@ signal bellman_ford_success(result: Variant)
 func change_scene(path: String):
 	get_tree().call_deferred("change_scene_to_file", path)
 	
-
+var base_url: String = "http://localhost:8080"
 
 
 func generate_graph():
@@ -16,8 +16,9 @@ func generate_graph():
 	add_child(http)
 
 	var url = \
-  "http://localhost:8080/graph?number_of_vertices=%s&weight_range=%s" % \
+  "%s/graph?number_of_vertices=%s&weight_range=%s" % \
 	[
+		base_url,
 	  Game.number_of_vertices,
 	  Game.weight_range
 	]
@@ -42,7 +43,7 @@ func bellman_ford():
 	add_child(http)
 
 	var url = \
-		"http://localhost:8080/bellmanford"
+		"%s/bellmanford" % [base_url]
 	var graph = Game.get_graph()
 	if not graph:
 		print("Graph data is not available.")
@@ -68,6 +69,18 @@ func _bellman_ford_success(_result, _response_code, _headers, body):
 	var json = JSON.new()
 	json.parse(body.get_string_from_utf8())
 	var response = json.get_data()
+
+	var error = false
+	print(JSON.stringify(response, "\t"))
+	if response.has("error"):
+		push_error("Error in Bellman-Ford response: %s" % response["error"])
+		error = true
+	
+	if error:
+		# try again
+		print("trying again")
+		generate_graph()
+		return
 	
 	Game.set_bellman_ford_result(response)
 	bellman_ford_success.emit(response)
