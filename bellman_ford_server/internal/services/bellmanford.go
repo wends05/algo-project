@@ -53,47 +53,6 @@ func (s *BellmanFordService) FindShortestPath(input models.BellmanFordInput) (*m
 	}, nil
 }
 
-// HasNegativeCycle checks if the graph contains a negative cycle
-func (s *BellmanFordService) HasNegativeCycle(edges []models.Edge, vertices int) bool {
-	// Handle edge cases
-	if vertices <= 0 || len(edges) == 0 {
-		return false
-	}
-
-	// Initialize distances
-	dist := make([]int, vertices)
-	for i := range dist {
-		dist[i] = math.MaxInt32
-	}
-	dist[0] = 0 // Start from vertex 0
-
-	// Relax edges vertices-1 times
-	for range vertices - 1 {
-		relaxed := false
-		for _, edge := range edges {
-			if dist[edge.Source] != math.MaxInt32 &&
-				dist[edge.Source]+edge.Weight < dist[edge.Target] {
-				dist[edge.Target] = dist[edge.Source] + edge.Weight
-				relaxed = true
-			}
-		}
-		// Early termination if no relaxation occurred
-		if !relaxed {
-			break
-		}
-	}
-
-	// Check for negative cycles (one more iteration)
-	for _, edge := range edges {
-		if dist[edge.Source] != math.MaxInt32 &&
-			dist[edge.Source]+edge.Weight < dist[edge.Target] {
-			return true
-		}
-	}
-
-	return false
-}
-
 // runBellmanFord executes the core Bellman-Ford algorithm
 func (s *BellmanFordService) runBellmanFord(edges []models.Edge, vertices, startVertex int) algorithmResult {
 	result := algorithmResult{

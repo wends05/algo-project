@@ -4,7 +4,6 @@ import (
 	"bellman_ford_server/internal/models"
 	"fmt"
 	"math/rand"
-	"sort"
 )
 
 // GraphService handles graph generation operations
@@ -100,6 +99,7 @@ func (s *GraphService) generateEdges(params models.GraphGenerationParams) []mode
 		weight := rand.Intn(2*weightRange+1) - weightRange
 
 		edgeKey := fmt.Sprintf("%d-%d", source, target)
+		fmt.Printf("Creating edge from %d to %d with weight %d\n", source, target, weight)
 		if !edgeSet[edgeKey] {
 			newEdge := models.Edge{
 				Source: source,
@@ -163,9 +163,6 @@ func (s *GraphService) createGuaranteedPath(vertices, startVertex, endVertex int
 
 	// Add end vertex and sort by levels
 	pathVertices = append(pathVertices, endVertex)
-	sort.Slice(pathVertices, func(i, j int) bool {
-		return levels[pathVertices[i]] < levels[pathVertices[j]]
-	})
 
 	return pathVertices
 }
@@ -233,6 +230,7 @@ func (s *GraphService) addRandomEdges(edges []models.Edge, edgeSet map[string]bo
 }
 
 // Helper functions
+
 func min(a, b int) int {
 	if a < b {
 		return a
