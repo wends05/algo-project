@@ -1,9 +1,9 @@
 extends Node
 
 # game settings
-var number_of_vertices: int = 7
+var number_of_vertices: int = 10
 var start_vertex: int = 0
-var end_vertex: int = 6
+var end_vertex: int = 9
 
 var weight_range: int = 15
 var max_energy: int = 100
@@ -12,10 +12,16 @@ var max_energy: int = 100
 var _graph: Dictionary = {}
 var _bellman_ford_result: Dictionary = {}
 
+
 # current game progress
 var randomized_levels: Array = []
 var progress: Array[int] = [start_vertex]
-var current_energy: int = max_energy / 2
+var start_energy := max_energy / 2
+var current_energy: int = start_energy
+
+signal progress_changed(progress: Array[int])
+signal energy_changed(energy: int)
+
 
 func _ready() -> void:
 	randomized_levels = randomize_levels()
@@ -25,7 +31,10 @@ func _ready() -> void:
 
 func restart():
 	progress = [start_vertex]
+	progress_changed.emit(progress)
+
 	current_energy = max_energy / 2
+	energy_changed.emit(current_energy)
 	
 	Utils.change_scene("res://scenes/levels/level_%d.tscn" % Game.randomized_levels[0])
 
@@ -50,7 +59,10 @@ func get_level_at_index(level_index: int) -> int:
 
 func forward(to: int, energy_consumed: int):
 	progress.append(to)
+	progress_changed.emit(progress)
+
 	current_energy = current_energy - energy_consumed
+	energy_changed.emit(current_energy)
 
 	print("\n=====\nFORWARD")
 	print("Progress:", progress)
@@ -62,8 +74,12 @@ func forward(to: int, energy_consumed: int):
 
 func backward(returned_energy: int):
 	progress.pop_back()
-	var to = progress[-1] if progress.size() > 0 else start_vertex
+	progress_changed.emit(progress)
+
 	current_energy = current_energy + returned_energy
+	energy_changed.emit(current_energy)
+
+	var to = progress[-1] if progress.size() > 0 else start_vertex
 	
 	print("\n=====\nBACKWARD")
 	print("Progress:", progress)

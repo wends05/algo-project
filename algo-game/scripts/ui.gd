@@ -5,8 +5,26 @@ class_name UserInterface
 signal paused
 signal unpaused
 
-func _process(delta: float) -> void:
-	$Bounds/VBoxContainer/RichTextLabel.text = str(Engine.get_frames_per_second())
+func _ready():
+	Game.progress_changed.connect(_on_progress_changed)
+	_on_progress_changed(Game.progress)
+
+	Game.energy_changed.connect(_on_energy_changed)
+	_on_energy_changed(Game.current_energy)
+
+func _on_progress_changed(progress: Array[int]) -> void:
+	var progress_text = "Progress: %s" % [str(progress.map(
+		func(idx): return idx + 1
+	))]
+	print("[UI] Progress changed:", progress_text)
+	$"%Progress Label".text = progress_text
+
+
+func _on_energy_changed(energy: int) -> void:
+	$"%Energy Label".text = "⚡ %s / %s" % [energy, Game.max_energy]
+
+func _process(_delta: float) -> void:
+	$"%FPS Text".text = str(Engine.get_frames_per_second())
 
 func pause():
 	Global.shift_locked = false
