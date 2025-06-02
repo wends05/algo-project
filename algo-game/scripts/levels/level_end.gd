@@ -22,7 +22,22 @@ func _ready() -> void:
 func _on_restart_area_body_entered(body: Node3D) -> void:
 	if body is Player:
 		Game.restart()
+		Utils.change_scene("res://scenes/levels/level_%d.tscn" % Game.randomized_levels[0])
 
 func _on_exit_area_body_entered(body: Node3D) -> void:
 	if body is Player:
-		pass
+		Game.reset_game()
+		Utils.change_scene("res://scenes/main/start.tscn")
+
+
+func _on_restart_area_2_body_entered(body: Node3D) -> void:
+	# reset map too
+	if body is Player:
+		Utils.bellman_ford_success.connect(_start_game)
+		print_debug("Restarting game... with another map")
+		Game.reset_game()
+		Utils.generate_graph()
+
+func _start_game(data):
+	if data:
+		Utils.change_scene("res://scenes/levels/level_%d.tscn" % Game.randomized_levels[0])

@@ -95,12 +95,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.5, 0)
 
 [node name="Restart Label" type="Label3D" parent="Doors/Restart Game Door"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
-text = "Restart"
+text = "Restart
+(Same Map)"
 font_size = 50
 
 [node name="Restart Area" type="Area3D" parent="Doors/Restart Game Door"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Doors/Restart Game Door/Restart Area"]
+shape = SubResource("BoxShape3D_g3vc2")
+
+[node name="Restart Game Door2" parent="Doors" instance=ExtResource("4_g3vc2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.03109, 2.5, -0.0179501)
+
+[node name="Restart Label" type="Label3D" parent="Doors/Restart Game Door2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+text = "Restart"
+font_size = 50
+
+[node name="Restart Area 2" type="Area3D" parent="Doors/Restart Game Door2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Doors/Restart Game Door2/Restart Area 2"]
 shape = SubResource("BoxShape3D_g3vc2")
 
 [node name="Quit Door" parent="Doors" instance=ExtResource("4_g3vc2")]
@@ -117,4 +131,5 @@ font_size = 50
 shape = SubResource("BoxShape3D_htpn6")
 
 [connection signal="body_entered" from="Doors/Restart Game Door/Restart Area" to="." method="_on_restart_area_body_entered"]
+[connection signal="body_entered" from="Doors/Restart Game Door2/Restart Area 2" to="." method="_on_restart_area_2_body_entered"]
 [connection signal="body_entered" from="Doors/Quit Door/Exit Area" to="." method="_on_exit_area_body_entered"]

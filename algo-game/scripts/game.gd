@@ -6,7 +6,6 @@ var start_vertex: int = 0
 var end_vertex: int = 9
 
 var weight_range: int = 15
-var max_energy: int = 100
 
 # api results
 var _graph: Dictionary = {}
@@ -16,7 +15,7 @@ var _bellman_ford_result: Dictionary = {}
 # current game progress
 var randomized_levels: Array = []
 var progress: Array[int] = [start_vertex]
-var start_energy := max_energy / 2
+var start_energy := 0
 var current_energy: int = start_energy
 
 signal progress_changed(progress: Array[int])
@@ -43,10 +42,9 @@ func restart():
 	progress = [start_vertex]
 	progress_changed.emit(progress)
 
-	current_energy = max_energy / 2
+	current_energy = start_energy
 	energy_changed.emit(current_energy)
 	
-	Utils.change_scene("res://scenes/levels/level_%d.tscn" % Game.randomized_levels[0])
 
 func randomize_levels():
 	randomized_levels = range(1, number_of_vertices + 1)
@@ -156,7 +154,12 @@ func get_backdoor_edge(level_index: int):
 #
 
 func calculate_score():
-	var score := self.current_energy / get_goal_energy() * 100
+	var goal_energy = get_goal_energy()
+
+	if not goal_energy:
+		print("Goal energy is not set, cannot calculate score.")
+		return 0
+	var score: int = current_energy / goal_energy * 100
 	print("Score calculated: %s" % score)
 	return score
 
@@ -167,9 +170,6 @@ func reset_game():
 	_bellman_ford_result = {}
 	randomize_levels()
 
-func get_goal_energy() -> int:
+func get_goal_energy():
 	if _bellman_ford_result and "distance" in _bellman_ford_result:
 		return start_energy - _bellman_ford_result.distance
-	else:
-		print("Bellman-Ford result is not available.")
-		return max_energy

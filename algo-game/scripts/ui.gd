@@ -21,7 +21,7 @@ func _on_progress_changed(progress: Array[int]) -> void:
 
 
 func _on_energy_changed(energy: int) -> void:
-	$"%Energy Label".text = "⚡ %s / %s" % [energy, Game.max_energy]
+	$"%Energy Label".text = "⚡ %s " % energy
 
 func _process(_delta: float) -> void:
 	$"%FPS Text".text = str(Engine.get_frames_per_second())
@@ -47,6 +47,7 @@ func _on_return_pressed() -> void:
 func _on_restart_pressed() -> void:
 	unpause()
 	Game.restart()
+	Utils.change_scene("res://scenes/levels/level_%d.tscn" % Game.randomized_levels[0])
 
 func _on_quit_pressed() -> void:
 	unpause()
