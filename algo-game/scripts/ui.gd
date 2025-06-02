@@ -50,4 +50,23 @@ func _on_restart_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	unpause()
-	Utils.change_scene("res://scenes/main/main_menu.tscn")
+	Game.reset_game()
+	Utils.change_scene("res://scenes/main/start.tscn")
+
+signal fade_in_finished
+signal fade_out_finished
+
+func fade_in_transition() -> void:
+	var tween = create_tween()
+	$Transition/Background.color = Color(0, 0, 0, 0)
+	$Transition.visible = true
+	tween.tween_property($"Transition/Background", "color", Color8(0,0,0,120), 1.2)
+	await tween.finished
+	fade_in_finished.emit()
+
+func fade_out_transition() -> void:
+	var tween = create_tween()
+	tween.tween_property($"Transition/Background", "color", Color8(0,0,0,0), 1.2)
+	await tween.finished
+	$Transition.visible = false
+	fade_out_finished.emit()

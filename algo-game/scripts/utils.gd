@@ -4,7 +4,7 @@ extends Node
 signal graph_generated(graph: Variant)
 signal bellman_ford_success(result: Variant)
 
-func change_scene(path: String):
+func change_scene(path: NodePath):
 	get_tree().call_deferred("change_scene_to_file", path)
 	
 var base_url: String = "http://localhost:8080"

@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://bo2a5y2tkg25x"]
+
+[ext_resource type="PackedScene" uid="uid://cp4ux71g485mb" path="res://blends/door.blend" id="1_0e0e3"]
+[ext_resource type="Script" uid="uid://nq4qnebxpjla" path="res://scripts/doors/end_door.gd" id="2_b3r3e"]
+
+[sub_resource type="FontFile" id="FontFile_b3r3e"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
+cache/0/100/0/ascent = 0.0
+cache/0/100/0/descent = 0.0
+cache/0/100/0/underline_position = 0.0
+cache/0/100/0/underline_thickness = 0.0
+cache/0/100/0/scale = 1.0
+cache/0/50/0/ascent = 0.0
+cache/0/50/0/descent = 0.0
+cache/0/50/0/underline_position = 0.0
+cache/0/50/0/underline_thickness = 0.0
+cache/0/50/0/scale = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8krob"]
+size = Vector3(1, 3, 0.5)
+
+[node name="End Door" instance=ExtResource("1_0e0e3")]
+script = ExtResource("2_b3r3e")
+
+[node name="Door Label" type="Label3D" parent="." index="1"]
+transform = Transform3D(1, 0, 1.49012e-08, 0, 1, 0, -1.49012e-08, 0, 1, 0, 2.34803, 0)
+pixel_size = 0.01
+text = "..."
+font = SubResource("FontFile_b3r3e")
+font_size = 50
+
+[node name="Light" type="OmniLight3D" parent="." index="2"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, -1.04308e-07, 0, 1, 0, 1.04308e-07, 0, 1, 0, 0, 1)
+light_color = Color(0, 0, 0, 1)
+light_energy = 2.0
+
+[node name="Light2" type="OmniLight3D" parent="." index="3"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, -1.04308e-07, 0, 1, 0, 1.04308e-07, 0, 1, 0, 0, 1)
+light_color = Color(0, 0, 0, 1)
+light_energy = 2.0
+
+[node name="Player Detector" type="Area3D" parent="." index="4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player Detector" index="0"]
+shape = SubResource("BoxShape3D_8krob")
+
+[connection signal="body_entered" from="Player Detector" to="." method="_on_player_detector_body_entered"]

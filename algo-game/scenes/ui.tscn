@@ -140,6 +140,23 @@ layout_mode = 2
 text = "Quit
 "
 
+[node name="Transition" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="Transition"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [connection signal="pressed" from="Bounds/HBoxContainer/VBoxContainer2/Pause Button" to="." method="_on_pause_button_pressed"]
 [connection signal="pressed" from="Pause Screen/VBoxContainer/Return" to="." method="_on_return_pressed"]
 [connection signal="pressed" from="Pause Screen/VBoxContainer/Restart" to="." method="_on_restart_pressed"]

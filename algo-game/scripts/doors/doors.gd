@@ -6,7 +6,7 @@ func initialize_doors(edges: Array):
 	for idx in range(edges.size()):
 		var edge = edges[idx]
 		
-		var door_scene : PackedScene = load("res://scenes/Door.tscn")
+		var door_scene : PackedScene = load("res://scenes/doors/Door.tscn")
 		var door_instance : Door = door_scene.instantiate()
 		door_instance.name = "Door %d" % edge["target"]
 		door_instance.edge = edge

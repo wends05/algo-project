@@ -1,11 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://bcf5e785rxq6t"]
+[gd_scene load_steps=16 format=3 uid="uid://bcf5e785rxq6t"]
 
 [ext_resource type="PackedScene" uid="uid://0jipqcsji7bb" path="res://scenes/Player.tscn" id="1_d06uk"]
 [ext_resource type="Script" uid="uid://ddq2w3ucuk6cy" path="res://scripts/levels/level.gd" id="1_hq5i0"]
 [ext_resource type="PackedScene" uid="uid://bmmchwharvst6" path="res://scenes/restarter.tscn" id="2_hq5i0"]
-[ext_resource type="Script" uid="uid://dhtbml4j4ieor" path="res://scripts/doors.gd" id="3_u1w5x"]
-[ext_resource type="PackedScene" uid="uid://bj7dx1rkh453d" path="res://scenes/Backdoor.tscn" id="5_sjq8i"]
+[ext_resource type="Script" uid="uid://dhtbml4j4ieor" path="res://scripts/doors/doors.gd" id="3_u1w5x"]
+[ext_resource type="PackedScene" uid="uid://bj7dx1rkh453d" path="res://scenes/doors/Backdoor.tscn" id="5_sjq8i"]
+[ext_resource type="PackedScene" uid="uid://lp5ibftbl8au" path="res://scenes/doors/Door.tscn" id="5_u1w5x"]
 [ext_resource type="PackedScene" uid="uid://rlgyii1ndy7k" path="res://scenes/ui.tscn" id="7_u1w5x"]
+[ext_resource type="PackedScene" uid="uid://bo2a5y2tkg25x" path="res://scenes/doors/EndDoor.tscn" id="8_posk4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mdmkc"]
 sky_top_color = Color(0.0541182, 0.273266, 0.23133, 1)
@@ -69,14 +71,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 script = ExtResource("3_u1w5x")
 
 [node name="Position 1" type="Node3D" parent="Doors"]
-transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, 1, 0, 7.5, -19)
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -5.5, 2.5, -5.5)
 rotation_edit_mode = 2
 
+[node name="Door" parent="Doors/Position 1" instance=ExtResource("5_u1w5x")]
+
 [node name="Position 2" type="Node3D" parent="Doors"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12, 12, -14)
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, 0.5, 2.5, -5.5)
+
+[node name="Door" parent="Doors/Position 2" instance=ExtResource("5_u1w5x")]
 
 [node name="Position 3" type="Node3D" parent="Doors"]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -12, 12.5, -14)
+transform = Transform3D(1, 0, 1.58932e-08, 0, 1, 0, -1.58932e-08, 0, 1, 6.5, 2.5, -5.5)
+
+[node name="Door" parent="Doors/Position 3" instance=ExtResource("5_u1w5x")]
 
 [node name="Backdoor" parent="." instance=ExtResource("5_sjq8i")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.46138, 8)
@@ -87,3 +95,6 @@ follow_viewport_enabled = true
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource("7_u1w5x")]
 metadata/_edit_use_anchors_ = true
+
+[node name="End Door" parent="." groups=["removed_game"] instance=ExtResource("8_posk4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -3.5)

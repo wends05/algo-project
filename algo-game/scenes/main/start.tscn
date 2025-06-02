@@ -1,0 +1,153 @@
+[gd_scene load_steps=13 format=3 uid="uid://by33cw0etq4w0"]
+
+[ext_resource type="Script" uid="uid://b70n5hmovt0q3" path="res://scripts/main/start.gd" id="1_tn2g7"]
+[ext_resource type="PackedScene" uid="uid://cp4ux71g485mb" path="res://blends/door.blend" id="2_3ourn"]
+[ext_resource type="PackedScene" uid="uid://0jipqcsji7bb" path="res://scenes/Player.tscn" id="3_j0hrf"]
+[ext_resource type="PackedScene" uid="uid://bmmchwharvst6" path="res://scenes/restarter.tscn" id="4_3ourn"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_j0hrf"]
+sky_top_color = Color(0.099986, 0.099986, 0.099986, 1)
+sky_horizon_color = Color(0.0702721, 0.0731273, 0.0776345, 1)
+ground_bottom_color = Color(0.099986, 0.099986, 0.099986, 1)
+ground_horizon_color = Color(0.0705882, 0.0745098, 0.0784314, 1)
+
+[sub_resource type="Sky" id="Sky_766gn"]
+sky_material = SubResource("ProceduralSkyMaterial_j0hrf")
+
+[sub_resource type="Environment" id="Environment_hn7o5"]
+background_mode = 2
+sky = SubResource("Sky_766gn")
+
+[sub_resource type="BoxMesh" id="BoxMesh_fxasf"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_tn2g7"]
+data = PackedVector3Array(-10, 0.5, 10, 10, 0.5, 10, -10, -0.5, 10, 10, 0.5, 10, 10, -0.5, 10, -10, -0.5, 10, 10, 0.5, -10, -10, 0.5, -10, 10, -0.5, -10, -10, 0.5, -10, -10, -0.5, -10, 10, -0.5, -10, 10, 0.5, 10, 10, 0.5, -10, 10, -0.5, 10, 10, 0.5, -10, 10, -0.5, -10, 10, -0.5, 10, -10, 0.5, -10, -10, 0.5, 10, -10, -0.5, -10, -10, 0.5, 10, -10, -0.5, 10, -10, -0.5, -10, 10, 0.5, 10, -10, 0.5, 10, 10, 0.5, -10, -10, 0.5, 10, -10, 0.5, -10, 10, 0.5, -10, -10, -0.5, 10, 10, -0.5, 10, -10, -0.5, -10, 10, -0.5, 10, 10, -0.5, -10, -10, -0.5, -10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_766gn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hn7o5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wlmty"]
+size = Vector3(20, 1, 20)
+
+[node name="Start" type="Node3D"]
+script = ExtResource("1_tn2g7")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+process_mode = 4
+environment = SubResource("Environment_hn7o5")
+
+[node name="Player" parent="." instance=ExtResource("3_j0hrf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 5)
+
+[node name="Main Ground" type="Node3D" parent="."]
+
+[node name="Ground" type="MeshInstance3D" parent="Main Ground"]
+mesh = SubResource("BoxMesh_fxasf")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Main Ground/Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Main Ground/Ground/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_tn2g7")
+
+[node name="Doors" type="Node3D" parent="Main Ground"]
+
+[node name="Start Game Door" parent="Main Ground/Doors" instance=ExtResource("2_3ourn")]
+transform = Transform3D(1, 0, 2.08616e-07, 0, 1, 0, -2.08616e-07, 0, 1, -2, 2.5, -3)
+
+[node name="Start Label" type="Label3D" parent="Main Ground/Doors/Start Game Door"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+text = "Start
+"
+font_size = 50
+
+[node name="Start Area" type="Area3D" parent="Main Ground/Doors/Start Game Door"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Main Ground/Doors/Start Game Door/Start Area"]
+shape = SubResource("BoxShape3D_766gn")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Main Ground/Doors/Start Game Door"]
+transform = Transform3D(1, 0, 2.84217e-14, 0, 1, 0, -2.84217e-14, 0, 1, -0.14645, 2, 1.35355)
+
+[node name="Instructions Door" parent="Main Ground/Doors" instance=ExtResource("2_3ourn")]
+transform = Transform3D(1, 0, 2.08616e-07, 0, 1, 0, -2.08616e-07, 0, 1, 2, 2.5, -3)
+
+[node name="Instructions Label" type="Label3D" parent="Main Ground/Doors/Instructions Door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+text = "Instructions"
+font_size = 50
+
+[node name="Instructions Area" type="Area3D" parent="Main Ground/Doors/Instructions Door"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Main Ground/Doors/Instructions Door/Instructions Area"]
+shape = SubResource("BoxShape3D_hn7o5")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Main Ground/Doors/Instructions Door"]
+transform = Transform3D(1, 0, 1.42109e-14, 0, 1, 0, -1.42109e-14, 0, 1, -0.146451, 2, 1.35355)
+
+[node name="Instructions Ground" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 60)
+
+[node name="Ground" type="MeshInstance3D" parent="Instructions Ground"]
+mesh = SubResource("BoxMesh_wlmty")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Instructions Ground/Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Instructions Ground/Ground/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_tn2g7")
+
+[node name="Doors" type="Node3D" parent="Instructions Ground"]
+transform = Transform3D(1, 0, 2.08616e-07, 0, 1, 0, -2.08616e-07, 0, 1, 0, -8, -63)
+
+[node name="Return Door" parent="Instructions Ground/Doors" instance=ExtResource("2_3ourn")]
+unique_name_in_owner = true
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 5.49999, 11, 57.5)
+
+[node name="Return Label" type="Label3D" parent="Instructions Ground/Doors/Return Door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+text = "Instructions"
+font_size = 50
+
+[node name="Return Area" type="Area3D" parent="Instructions Ground/Doors/Return Door"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Instructions Ground/Doors/Return Door/Return Area"]
+shape = SubResource("BoxShape3D_hn7o5")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Instructions Ground/Doors/Return Door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.353554, 2, 1.06066)
+
+[node name="Instructions Spotlight" type="SpotLight3D" parent="Instructions Ground"]
+transform = Transform3D(-0.707107, -0.353553, 0.612372, 2.78059e-08, 0.866025, 0.5, -0.707107, 0.353553, -0.612373, 2.5, 6.5, -2)
+light_energy = 10.0
+spot_range = 15.0
+
+[node name="Label3D" type="Label3D" parent="Instructions Ground"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -1, 3, 6.5)
+visibility_range_fade_mode = 1
+shaded = true
+no_depth_test = true
+texture_filter = 0
+text = "Instructions:
+
+Traverse around levels through doors to enter another level, and gain or lose energy based on the door.
+Label on top of the door signifies the level
+Label in the middle of the door signifies the energy gain or lose
+
+You can return to the previous level
+
+Reach the end door gaining the highest possible energy.
+
+You win when you are able to get the highest possible energy."
+horizontal_alignment = 0
+line_spacing = 0.5
+autowrap_mode = 3
+width = 1500.0
+
+[node name="Restarter" parent="." instance=ExtResource("4_3ourn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -13.5, 0)
+
+[connection signal="body_entered" from="Main Ground/Doors/Start Game Door/Start Area" to="." method="_on_start_area_body_entered"]
+[connection signal="body_entered" from="Main Ground/Doors/Instructions Door/Instructions Area" to="." method="_on_instructions_area_body_entered"]
+[connection signal="body_entered" from="Instructions Ground/Doors/Return Door/Return Area" to="." method="_on_return_area_body_entered"]

@@ -1,0 +1,201 @@
+[gd_scene load_steps=22 format=3 uid="uid://f5oqedhj2gwq"]
+
+[ext_resource type="Script" uid="uid://ddq2w3ucuk6cy" path="res://scripts/levels/level.gd" id="1_ene4w"]
+[ext_resource type="PackedScene" uid="uid://0jipqcsji7bb" path="res://scenes/Player.tscn" id="1_xy1qu"]
+[ext_resource type="PackedScene" uid="uid://bmmchwharvst6" path="res://scenes/restarter.tscn" id="2_jjvta"]
+[ext_resource type="Script" uid="uid://dhtbml4j4ieor" path="res://scripts/doors/doors.gd" id="3_3mnpy"]
+[ext_resource type="PackedScene" uid="uid://bj7dx1rkh453d" path="res://scenes/doors/Backdoor.tscn" id="4_6ayib"]
+[ext_resource type="PackedScene" uid="uid://rlgyii1ndy7k" path="res://scenes/ui.tscn" id="5_65guy"]
+[ext_resource type="PackedScene" uid="uid://lp5ibftbl8au" path="res://scenes/doors/Door.tscn" id="5_h6r4t"]
+[ext_resource type="PackedScene" uid="uid://bo2a5y2tkg25x" path="res://scenes/doors/EndDoor.tscn" id="8_h6r4t"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p6rmu"]
+sky_top_color = Color(0.8, 0.4, 0.2, 1)
+sky_horizon_color = Color(0.9, 0.7, 0.5, 1)
+ground_bottom_color = Color(0.3, 0.15, 0.1, 1)
+ground_horizon_color = Color(0.8, 0.6, 0.4, 1)
+
+[sub_resource type="Sky" id="Sky_ns6u7"]
+sky_material = SubResource("ProceduralSkyMaterial_p6rmu")
+
+[sub_resource type="Environment" id="Environment_34hum"]
+background_mode = 2
+background_color = Color(0.8, 0.5, 0.3, 1)
+sky = SubResource("Sky_ns6u7")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_w2i51"]
+size = Vector3(10, 1, 30)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ene4w"]
+data = PackedVector3Array(-5, 0.5, 15, 5, 0.5, 15, -5, -0.5, 15, 5, 0.5, 15, 5, -0.5, 15, -5, -0.5, 15, 5, 0.5, -15, -5, 0.5, -15, 5, -0.5, -15, -5, 0.5, -15, -5, -0.5, -15, 5, -0.5, -15, 5, 0.5, 15, 5, 0.5, -15, 5, -0.5, 15, 5, 0.5, -15, 5, -0.5, -15, 5, -0.5, 15, -5, 0.5, -15, -5, 0.5, 15, -5, -0.5, -15, -5, 0.5, 15, -5, -0.5, 15, -5, -0.5, -15, 5, 0.5, 15, -5, 0.5, 15, 5, 0.5, -15, -5, 0.5, 15, -5, 0.5, -15, 5, 0.5, -15, -5, -0.5, 15, 5, -0.5, 15, -5, -0.5, -15, 5, -0.5, 15, 5, -0.5, -15, -5, -0.5, -15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0kxia"]
+size = Vector3(30, 1, 10)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_h6r4t"]
+data = PackedVector3Array(-15, 0.5, 5, 15, 0.5, 5, -15, -0.5, 5, 15, 0.5, 5, 15, -0.5, 5, -15, -0.5, 5, 15, 0.5, -5, -15, 0.5, -5, 15, -0.5, -5, -15, 0.5, -5, -15, -0.5, -5, 15, -0.5, -5, 15, 0.5, 5, 15, 0.5, -5, 15, -0.5, 5, 15, 0.5, -5, 15, -0.5, -5, 15, -0.5, 5, -15, 0.5, -5, -15, 0.5, 5, -15, -0.5, -5, -15, 0.5, 5, -15, -0.5, 5, -15, -0.5, -5, 15, 0.5, 5, -15, 0.5, 5, 15, 0.5, -5, -15, 0.5, 5, -15, 0.5, -5, 15, 0.5, -5, -15, -0.5, 5, 15, -0.5, 5, -15, -0.5, -5, 15, -0.5, 5, 15, -0.5, -5, -15, -0.5, -5)
+
+[sub_resource type="PrismMesh" id="PrismMesh_v7ucw"]
+left_to_right = 0.0
+size = Vector3(5, 3, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_w2i51"]
+data = PackedVector3Array(-2.5, 1.5, 0.5, 2.5, -1.5, 0.5, -2.5, -1.5, 0.5, -2.5, 1.5, -0.5, -2.5, -1.5, -0.5, 2.5, -1.5, -0.5, -2.5, 1.5, 0.5, -2.5, 1.5, -0.5, 2.5, -1.5, 0.5, -2.5, 1.5, -0.5, 2.5, -1.5, -0.5, 2.5, -1.5, 0.5, -2.5, 1.5, -0.5, -2.5, 1.5, 0.5, -2.5, -1.5, -0.5, -2.5, 1.5, 0.5, -2.5, -1.5, 0.5, -2.5, -1.5, -0.5, -2.5, -1.5, 0.5, 2.5, -1.5, 0.5, -2.5, -1.5, -0.5, 2.5, -1.5, 0.5, 2.5, -1.5, -0.5, -2.5, -1.5, -0.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_xsrpe"]
+data = PackedVector3Array(-2.5, 1.5, 0.5, 2.5, -1.5, 0.5, -2.5, -1.5, 0.5, -2.5, 1.5, -0.5, -2.5, -1.5, -0.5, 2.5, -1.5, -0.5, -2.5, 1.5, 0.5, -2.5, 1.5, -0.5, 2.5, -1.5, 0.5, -2.5, 1.5, -0.5, 2.5, -1.5, -0.5, 2.5, -1.5, 0.5, -2.5, 1.5, -0.5, -2.5, 1.5, 0.5, -2.5, -1.5, -0.5, -2.5, 1.5, 0.5, -2.5, -1.5, 0.5, -2.5, -1.5, -0.5, -2.5, -1.5, 0.5, 2.5, -1.5, 0.5, -2.5, -1.5, -0.5, 2.5, -1.5, 0.5, 2.5, -1.5, -0.5, -2.5, -1.5, -0.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0kxia"]
+data = PackedVector3Array(-2.5, 1.5, 0.5, 2.5, -1.5, 0.5, -2.5, -1.5, 0.5, -2.5, 1.5, -0.5, -2.5, -1.5, -0.5, 2.5, -1.5, -0.5, -2.5, 1.5, 0.5, -2.5, 1.5, -0.5, 2.5, -1.5, 0.5, -2.5, 1.5, -0.5, 2.5, -1.5, -0.5, 2.5, -1.5, 0.5, -2.5, 1.5, -0.5, -2.5, 1.5, 0.5, -2.5, -1.5, -0.5, -2.5, 1.5, 0.5, -2.5, -1.5, 0.5, -2.5, -1.5, -0.5, -2.5, -1.5, 0.5, 2.5, -1.5, 0.5, -2.5, -1.5, -0.5, 2.5, -1.5, 0.5, 2.5, -1.5, -0.5, -2.5, -1.5, -0.5)
+
+[sub_resource type="PrismMesh" id="PrismMesh_w2i51"]
+left_to_right = 0.0
+size = Vector3(5, 3, 5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_xsrpe"]
+points = PackedVector3Array(2.2217, -1.22216, 2.53869, -2.47457, -1.5, -2.47359, -2.47457, -1.5, 2.47359, -2.53968, 1.55556, -2.53869, 2.53939, -1.46, -2.53869, -2.53968, 1.55556, 2.53869, 2.47476, -1.5, 2.47408, -2.14245, 1.39679, -2.53869, -2.14245, 1.39679, 2.53869, 2.2217, -1.22216, -2.53869, 2.47476, -1.5, -2.47408, 2.53939, -1.46, 2.53869, -2.46014, 1.55556, -2.53869, -2.46014, 1.55556, 2.53869, 2.45984, -1.38062, -2.53869, 2.45984, -1.38062, 2.53869, 1.82496, -0.983715, -2.53869, 1.82496, -0.983715, 2.53869)
+
+[node name="Level 8" type="Node3D" node_paths=PackedStringArray("doors_node", "backdoor_node")]
+script = ExtResource("1_ene4w")
+doors_node = NodePath("Doors")
+backdoor_node = NodePath("Backdoor")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+process_mode = 4
+environment = SubResource("Environment_34hum")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433017, 0.25, 0.465677, -0.516447, 0.718629, -0.182067, 0.738769, 0.648901, 5, 15, -3)
+light_color = Color(1, 0.9, 0.7, 1)
+light_energy = 1.8
+light_specular = 0.2
+light_bake_mode = 1
+shadow_enabled = true
+directional_shadow_mode = 1
+directional_shadow_blend_splits = true
+
+[node name="Player" parent="." node_paths=PackedStringArray("UI") instance=ExtResource("1_xy1qu")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.5, 2)
+top_level = true
+UI = NodePath("../CanvasLayer/UI")
+
+[node name="Ground" type="Node3D" parent="."]
+
+[node name="Door Platform" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 3, 15)
+mesh = SubResource("BoxMesh_w2i51")
+skeleton = NodePath("../Floor")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground/Door Platform"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Door Platform/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ene4w")
+
+[node name="Floor" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_0kxia")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground/Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_h6r4t")
+
+[node name="Slopes" type="Node3D" parent="Ground"]
+
+[node name="Slope Middle" type="MeshInstance3D" parent="Ground/Slopes" groups=["removed_end"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 2, 7.5)
+mesh = SubResource("PrismMesh_v7ucw")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 8/Ground/MeshInstance3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground/Slopes/Slope Middle"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Slopes/Slope Middle/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_w2i51")
+
+[node name="Slope Left" type="MeshInstance3D" parent="Ground/Slopes" groups=["removed_end"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 8, 2, 7.5)
+mesh = SubResource("PrismMesh_v7ucw")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 8/Ground/MeshInstance3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground/Slopes/Slope Left"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Slopes/Slope Left/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_xsrpe")
+
+[node name="Slope Right" type="MeshInstance3D" parent="Ground/Slopes" groups=["removed_end"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -8, 2, 7.5)
+mesh = SubResource("PrismMesh_v7ucw")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 8/Ground/MeshInstance3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground/Slopes/Slope Right"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Slopes/Slope Right/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_0kxia")
+
+[node name="Slope End" type="MeshInstance3D" parent="Ground/Slopes" groups=["removed_game"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 2, 7.5)
+mesh = SubResource("PrismMesh_w2i51")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 8/Ground/MeshInstance3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground/Slopes/Slope End"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Slopes/Slope End/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_xsrpe")
+
+[node name="Objects" type="Node3D" parent="." groups=["removed_end"]]
+
+[node name="Slope" type="MeshInstance3D" parent="Objects"]
+transform = Transform3D(-0.707107, -0.612372, 0.353553, -3.78552e-08, 0.5, 0.866025, -0.707107, 0.612372, -0.353553, 20, 4.5, 9)
+mesh = SubResource("PrismMesh_v7ucw")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 8/Ground/MeshInstance3D")
+
+[node name="Slope4" type="MeshInstance3D" parent="Objects"]
+transform = Transform3D(-0.183013, -0.641457, -0.74501, -0.683013, -0.462097, 0.56565, -0.707107, 0.612372, -0.353553, -20, 4.5, 9)
+mesh = SubResource("PrismMesh_v7ucw")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 8/Ground/MeshInstance3D")
+
+[node name="Slope2" type="MeshInstance3D" parent="Objects"]
+transform = Transform3D(-0.183013, -0.641457, -0.74501, -0.683013, -0.462097, 0.56565, -0.707107, 0.612372, -0.353553, 20, 4.5, -1)
+mesh = SubResource("PrismMesh_v7ucw")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 8/Ground/MeshInstance3D")
+
+[node name="Slope3" type="MeshInstance3D" parent="Objects"]
+transform = Transform3D(-0.707107, -0.612373, 0.353553, -5.96046e-08, 0.5, 0.866026, -0.707107, 0.612372, -0.353553, -20, 4.5, -1)
+mesh = SubResource("PrismMesh_v7ucw")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 8/Ground/MeshInstance3D")
+
+[node name="Restarter" parent="." instance=ExtResource("2_jjvta")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -25, 0)
+
+[node name="Doors" type="Node3D" parent="."]
+script = ExtResource("3_3mnpy")
+
+[node name="Position 1" type="Node3D" parent="Doors"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 5.5, 16.5)
+rotation_edit_mode = 2
+
+[node name="Door" parent="Doors/Position 1" instance=ExtResource("5_h6r4t")]
+
+[node name="Position 2" type="Node3D" parent="Doors"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 5.5, 16.5)
+
+[node name="Door" parent="Doors/Position 2" instance=ExtResource("5_h6r4t")]
+
+[node name="Position 3" type="Node3D" parent="Doors"]
+transform = Transform3D(-1, 0, -1.03316e-07, 0, 1, 0, 1.03316e-07, 0, -1, -8, 5.5, 16.5)
+
+[node name="Door" parent="Doors/Position 3" instance=ExtResource("5_h6r4t")]
+
+[node name="Backdoor" parent="." instance=ExtResource("4_6ayib")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -2.5)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+follow_viewport_enabled = true
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("5_65guy")]
+metadata/_edit_use_anchors_ = true
+
+[node name="End Door" parent="." groups=["removed_game"] instance=ExtResource("8_h6r4t")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 5.5, 14.5)

@@ -1,12 +1,13 @@
-[gd_scene load_steps=21 format=3 uid="uid://cc0cwcavpmmge"]
+[gd_scene load_steps=22 format=3 uid="uid://cc0cwcavpmmge"]
 
 [ext_resource type="Script" uid="uid://ddq2w3ucuk6cy" path="res://scripts/levels/level.gd" id="1_hldbq"]
 [ext_resource type="PackedScene" uid="uid://0jipqcsji7bb" path="res://scenes/Player.tscn" id="2_fsnos"]
 [ext_resource type="PackedScene" uid="uid://bmmchwharvst6" path="res://scenes/restarter.tscn" id="3_mxx4w"]
-[ext_resource type="Script" uid="uid://dhtbml4j4ieor" path="res://scripts/doors.gd" id="4_vvoq0"]
-[ext_resource type="PackedScene" uid="uid://lp5ibftbl8au" path="res://scenes/Door.tscn" id="5_tqnj0"]
-[ext_resource type="PackedScene" uid="uid://bj7dx1rkh453d" path="res://scenes/Backdoor.tscn" id="6_dwyms"]
+[ext_resource type="Script" uid="uid://dhtbml4j4ieor" path="res://scripts/doors/doors.gd" id="4_vvoq0"]
+[ext_resource type="PackedScene" uid="uid://lp5ibftbl8au" path="res://scenes/doors/Door.tscn" id="5_tqnj0"]
+[ext_resource type="PackedScene" uid="uid://bj7dx1rkh453d" path="res://scenes/doors/Backdoor.tscn" id="6_dwyms"]
 [ext_resource type="PackedScene" uid="uid://rlgyii1ndy7k" path="res://scenes/ui.tscn" id="7_fsnos"]
+[ext_resource type="PackedScene" uid="uid://bo2a5y2tkg25x" path="res://scenes/doors/EndDoor.tscn" id="8_mxx4w"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hldbq"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -78,7 +79,7 @@ mesh = SubResource("BoxMesh_6xwso")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Floor/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_hldbq")
 
-[node name="Door 3 Slope" type="MeshInstance3D" parent="Ground"]
+[node name="Door 3 Slope" type="MeshInstance3D" parent="Ground" groups=["removed_end"]]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 9, 2, -6)
 mesh = SubResource("PrismMesh_fsnos")
 skeleton = NodePath("../Door 3 Platform")
@@ -88,7 +89,7 @@ skeleton = NodePath("../Door 3 Platform")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Door 3 Slope/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_mxx4w")
 
-[node name="Door 1 Slope" type="MeshInstance3D" parent="Ground"]
+[node name="Door 1 Slope" type="MeshInstance3D" parent="Ground" groups=["removed_end"]]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 9, 2, 6)
 mesh = SubResource("PrismMesh_fsnos")
 skeleton = NodePath("../Door 3 Platform")
@@ -98,7 +99,7 @@ skeleton = NodePath("../Door 3 Platform")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Door 1 Slope/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_vvoq0")
 
-[node name="Door 2 Slope" type="MeshInstance3D" parent="Ground"]
+[node name="Door 2 Slope" type="MeshInstance3D" parent="Ground" groups=["removed_end"]]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 16, 2, 0)
 mesh = SubResource("PrismMesh_fsnos")
 skeleton = NodePath("../Door 3 Platform")
@@ -108,7 +109,7 @@ skeleton = NodePath("../Door 3 Platform")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Door 2 Slope/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_tqnj0")
 
-[node name="Door 2 Platform" type="MeshInstance3D" parent="Ground"]
+[node name="Door 2 Platform" type="MeshInstance3D" parent="Ground" groups=["removed_end"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 0)
 mesh = SubResource("BoxMesh_dwyms")
 
@@ -117,7 +118,7 @@ mesh = SubResource("BoxMesh_dwyms")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Door 2 Platform/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_6xwso")
 
-[node name="Door 1 Platform" type="MeshInstance3D" parent="Ground"]
+[node name="Door 1 Platform" type="MeshInstance3D" parent="Ground" groups=["removed_end"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 2, 6)
 mesh = SubResource("BoxMesh_dwyms")
 
@@ -126,7 +127,7 @@ mesh = SubResource("BoxMesh_dwyms")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Door 1 Platform/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_5ke18")
 
-[node name="Door 3 Platform" type="MeshInstance3D" parent="Ground"]
+[node name="Door 3 Platform" type="MeshInstance3D" parent="Ground" groups=["removed_end"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 2, -6)
 mesh = SubResource("BoxMesh_dwyms")
 
@@ -135,8 +136,112 @@ mesh = SubResource("BoxMesh_dwyms")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Door 3 Platform/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_j14br")
 
-[node name="Objects" type="Node3D" parent="."]
+[node name="Objects" type="Node3D" parent="." groups=["removed_end"]]
 transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -9, 2, 0)
+
+[node name="Floating Object" type="Node3D" parent="Objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.2504, 0, -5.69402)
+
+[node name="Door 1 Slope2" type="MeshInstance3D" parent="Objects/Floating Object"]
+transform = Transform3D(-0.726727, -0.683013, -0.0732233, -0.683013, 0.707107, 0.183013, -0.0732233, 0.183013, -0.98038, -1.21734, -1.36603, 0.455523)
+mesh = SubResource("PrismMesh_fsnos")
+skeleton = NodePath("../Door 3 Platform")
+
+[node name="Door 1 Platform2" type="MeshInstance3D" parent="Objects/Floating Object"]
+transform = Transform3D(0.726726, -0.683013, 0.0732233, 0.683013, 0.707107, -0.183013, 0.0732233, 0.183013, 0.98038, 1.68957, 1.36603, 0.748412)
+mesh = SubResource("BoxMesh_dwyms")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 5/Objects")
+
+[node name="Floating Object2" type="Node3D" parent="Objects"]
+transform = Transform3D(0.95035, 0.25, -0.185295, -0.25, 0.258819, -0.933013, -0.185295, 0.933013, 0.308469, 26.9444, 0, 15.5563)
+
+[node name="Door 1 Slope2" type="MeshInstance3D" parent="Objects/Floating Object2"]
+transform = Transform3D(-0.726727, -0.683013, -0.0732233, -0.683013, 0.707107, 0.183013, -0.0732233, 0.183013, -0.98038, -1.21734, -1.36603, 0.455523)
+mesh = SubResource("PrismMesh_fsnos")
+skeleton = NodePath("../Door 3 Platform")
+
+[node name="Door 1 Platform2" type="MeshInstance3D" parent="Objects/Floating Object2"]
+transform = Transform3D(0.726726, -0.683013, 0.0732233, 0.683013, 0.707107, -0.183013, 0.0732233, 0.183013, 0.98038, 1.68957, 1.36603, 0.748412)
+mesh = SubResource("BoxMesh_dwyms")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 5/Objects")
+
+[node name="Floating Object3" type="Node3D" parent="Objects"]
+transform = Transform3D(0.95035, 0.25, -0.185295, -0.25, 0.258819, -0.933013, -0.185295, 0.933012, 0.308469, 11.4896, 12, 19.6974)
+
+[node name="Door 1 Slope2" type="MeshInstance3D" parent="Objects/Floating Object3"]
+transform = Transform3D(-0.726727, -0.683013, -0.0732233, -0.683013, 0.707107, 0.183013, -0.0732233, 0.183013, -0.98038, -1.21734, -1.36603, 0.455523)
+mesh = SubResource("PrismMesh_fsnos")
+skeleton = NodePath("../Door 3 Platform")
+
+[node name="Door 1 Platform2" type="MeshInstance3D" parent="Objects/Floating Object3"]
+transform = Transform3D(0.726726, -0.683013, 0.0732233, 0.683013, 0.707107, -0.183013, 0.0732233, 0.183013, 0.98038, 1.68957, 1.36603, 0.748412)
+mesh = SubResource("BoxMesh_dwyms")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 5/Objects")
+
+[node name="Floating Object4" type="Node3D" parent="Objects"]
+transform = Transform3D(0.966506, -0.224144, -0.125, 0.224144, 0.5, 0.836516, -0.125, -0.836516, 0.533494, 3.46618, 7, -10.2463)
+
+[node name="Door 1 Slope2" type="MeshInstance3D" parent="Objects/Floating Object4"]
+transform = Transform3D(-0.726727, -0.683013, -0.0732233, -0.683013, 0.707107, 0.183013, -0.0732233, 0.183013, -0.98038, -1.21734, -1.36603, 0.455523)
+mesh = SubResource("PrismMesh_fsnos")
+skeleton = NodePath("../Door 3 Platform")
+
+[node name="Door 1 Platform2" type="MeshInstance3D" parent="Objects/Floating Object4"]
+transform = Transform3D(0.726726, -0.683013, 0.0732233, 0.683013, 0.707107, -0.183013, 0.0732233, 0.183013, 0.98038, 1.68957, 1.36603, 0.748412)
+mesh = SubResource("BoxMesh_dwyms")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 5/Objects")
+
+[node name="Floating Object5" type="Node3D" parent="Objects"]
+transform = Transform3D(0.00851843, -0.25, -0.968208, -0.0669873, 0.965925, -0.25, 0.997717, 0.0669872, -0.00851843, -7.159, 7, -7.39925)
+
+[node name="Door 1 Slope2" type="MeshInstance3D" parent="Objects/Floating Object5"]
+transform = Transform3D(-0.726727, -0.683013, -0.0732233, -0.683013, 0.707107, 0.183013, -0.0732233, 0.183013, -0.98038, -1.21734, -1.36603, 0.455523)
+mesh = SubResource("PrismMesh_fsnos")
+skeleton = NodePath("../Door 3 Platform")
+
+[node name="Door 1 Platform2" type="MeshInstance3D" parent="Objects/Floating Object5"]
+transform = Transform3D(0.726726, -0.683013, 0.0732233, 0.683013, 0.707107, -0.183013, 0.0732233, 0.183013, 0.98038, 1.68957, 1.36603, 0.748412)
+mesh = SubResource("BoxMesh_dwyms")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 5/Objects")
+
+[node name="Floating Object6" type="Node3D" parent="Objects"]
+transform = Transform3D(0.00851841, -0.25, -0.968208, -0.0669873, 0.965925, -0.25, 0.997716, 0.0669872, -0.00851841, -12.349, 4, 15.7322)
+
+[node name="Door 1 Slope2" type="MeshInstance3D" parent="Objects/Floating Object6"]
+transform = Transform3D(-0.726727, -0.683013, -0.0732233, -0.683013, 0.707107, 0.183013, -0.0732233, 0.183013, -0.98038, -1.21734, -1.36603, 0.455523)
+mesh = SubResource("PrismMesh_fsnos")
+skeleton = NodePath("../Door 3 Platform")
+
+[node name="Door 1 Platform2" type="MeshInstance3D" parent="Objects/Floating Object6"]
+transform = Transform3D(0.726726, -0.683013, 0.0732233, 0.683013, 0.707107, -0.183013, 0.0732233, 0.183013, 0.98038, 1.68957, 1.36603, 0.748412)
+mesh = SubResource("BoxMesh_dwyms")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 5/Objects")
+
+[node name="Floating Object7" type="Node3D" parent="Objects"]
+transform = Transform3D(-0.997716, -0.0669872, 0.00851835, -0.0669873, 0.965925, -0.25, 0.00851838, -0.25, -0.968208, -14.4195, -4, 8.00479)
+
+[node name="Door 1 Slope2" type="MeshInstance3D" parent="Objects/Floating Object7"]
+transform = Transform3D(-0.726727, -0.683013, -0.0732233, -0.683013, 0.707107, 0.183013, -0.0732233, 0.183013, -0.98038, -1.21734, -1.36603, 0.455523)
+mesh = SubResource("PrismMesh_fsnos")
+skeleton = NodePath("../Door 3 Platform")
+
+[node name="Door 1 Platform2" type="MeshInstance3D" parent="Objects/Floating Object7"]
+transform = Transform3D(0.726726, -0.683013, 0.0732233, 0.683013, 0.707107, -0.183013, 0.0732233, 0.183013, 0.98038, 1.68957, 1.36603, 0.748412)
+mesh = SubResource("BoxMesh_dwyms")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 5/Objects")
+
+[node name="Floating Object8" type="Node3D" parent="Objects"]
+transform = Transform3D(-0.997716, -0.0669872, 0.00851832, -0.0669873, 0.965925, -0.25, 0.00851835, -0.25, -0.968207, 5.07485, 0, 42.1218)
+
+[node name="Door 1 Slope2" type="MeshInstance3D" parent="Objects/Floating Object8"]
+transform = Transform3D(-0.726727, -0.683013, -0.0732233, -0.683013, 0.707107, 0.183013, -0.0732233, 0.183013, -0.98038, -1.21734, -1.36603, 0.455523)
+mesh = SubResource("PrismMesh_fsnos")
+skeleton = NodePath("../Door 3 Platform")
+
+[node name="Door 1 Platform2" type="MeshInstance3D" parent="Objects/Floating Object8"]
+transform = Transform3D(0.726726, -0.683013, 0.0732233, 0.683013, 0.707107, -0.183013, 0.0732233, 0.183013, 0.98038, 1.68957, 1.36603, 0.748412)
+mesh = SubResource("BoxMesh_dwyms")
+skeleton = NodePath("../../root/@EditorNode@21281/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11491/@VSplitContainer@11143/@HSplitContainer@11145/@HSplitContainer@11147/@Control@11148/@SubViewportContainer@11149/@SubViewport@11150/Level 5/Objects")
 
 [node name="Restarter" parent="." instance=ExtResource("3_mxx4w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
@@ -161,7 +266,7 @@ transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 
 [node name="Door3" parent="Doors/Position 3" instance=ExtResource("5_tqnj0")]
 
 [node name="Backdoor" parent="." instance=ExtResource("6_dwyms")]
-transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -9, 2.5, 0)
+transform = Transform3D(-4.47035e-08, 0, 1, 0, 1, 0, -1, 0, -4.47035e-08, -9, 2.5, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 0
@@ -169,3 +274,6 @@ follow_viewport_enabled = true
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource("7_fsnos")]
 metadata/_edit_use_anchors_ = true
+
+[node name="End Door" parent="." groups=["removed_game"] instance=ExtResource("8_mxx4w")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 8, 2.5, 0)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bj7dx1rkh453d"]
 
 [ext_resource type="PackedScene" uid="uid://cp4ux71g485mb" path="res://blends/door.blend" id="1_okxap"]
-[ext_resource type="Script" uid="uid://bipr3r3vajx" path="res://scripts/backdoor.gd" id="2_85row"]
+[ext_resource type="Script" uid="uid://bipr3r3vajx" path="res://scripts/doors/backdoor.gd" id="2_85row"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8cewi"]
 size = Vector3(1, 3, 0.5)

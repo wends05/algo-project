@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 class_name Player
 
+var can_move := true
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const SENSITIVITY = 0.003
@@ -17,10 +18,13 @@ var was_shift_locked := false
 func _ready() -> void:
 	# fix camera
 	head_camera.rotation_degrees.x = -15.0
-	UI.paused.connect(update_mouse_mode)
-	UI.unpaused.connect(update_mouse_mode)
-	UI.unpaused.connect(game_unpaused)
-
+	if UI:
+		# connect UI signals
+		UI.paused.connect(update_mouse_mode)
+		UI.unpaused.connect(update_mouse_mode)
+		UI.unpaused.connect(game_unpaused)
+	else:
+		print("UI node is not assigned in Player script.")
 func _input(event) -> void:
 	if event.is_action_pressed("shift_lock"):
 		Global.shift_locked = !Global.shift_locked
@@ -53,6 +57,11 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 		
+	if not can_move:
+		velocity.x = 0
+		velocity.z = 0
+		return
+
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		

@@ -1,0 +1,110 @@
+[gd_scene load_steps=15 format=3 uid="uid://dvfnooiup8xgy"]
+
+[ext_resource type="Script" uid="uid://ddq2w3ucuk6cy" path="res://scripts/levels/level.gd" id="1_gnb3t"]
+[ext_resource type="PackedScene" uid="uid://0jipqcsji7bb" path="res://scenes/Player.tscn" id="1_xy1qu"]
+[ext_resource type="PackedScene" uid="uid://bmmchwharvst6" path="res://scenes/restarter.tscn" id="2_jjvta"]
+[ext_resource type="Script" uid="uid://dhtbml4j4ieor" path="res://scripts/doors/doors.gd" id="3_3mnpy"]
+[ext_resource type="PackedScene" uid="uid://bj7dx1rkh453d" path="res://scenes/doors/Backdoor.tscn" id="4_6ayib"]
+[ext_resource type="PackedScene" uid="uid://rlgyii1ndy7k" path="res://scenes/ui.tscn" id="5_65guy"]
+[ext_resource type="PackedScene" uid="uid://lp5ibftbl8au" path="res://scenes/doors/Door.tscn" id="5_hh2oi"]
+[ext_resource type="PackedScene" uid="uid://bo2a5y2tkg25x" path="res://scenes/doors/EndDoor.tscn" id="8_qblg5"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p6rmu"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0.102396, 0.105971, 0.111613, 1)
+ground_bottom_color = Color(0.110995, 0.090662, 0.0670423, 1)
+ground_horizon_color = Color(0.100562, 0.104096, 0.109674, 1)
+
+[sub_resource type="Sky" id="Sky_hh2oi"]
+sky_material = SubResource("ProceduralSkyMaterial_p6rmu")
+
+[sub_resource type="Environment" id="Environment_34hum"]
+background_mode = 2
+background_color = Color(0.2, 0.8, 0.4, 1)
+sky = SubResource("Sky_hh2oi")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_qblg5"]
+size = Vector3(30, 1, 4)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hh2oi"]
+points = PackedVector3Array(15.2381, 0.690476, 2.04762, -15.2381, -0.738095, -2.2381, -15.2381, 0.690476, -2.2381, 15.2381, -0.738095, -2.2381, -15.2381, -0.738095, 2.04762, -15.2381, 0.690476, 2.04762, 15.2381, 0.690476, -2.2381, 15.2381, -0.738095, 2.04762)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qblg5"]
+points = PackedVector3Array(15.2381, 0.690476, 2.04762, -15.2381, -0.738095, -2.2381, -15.2381, 0.690476, -2.2381, 15.2381, -0.738095, -2.2381, -15.2381, -0.738095, 2.04762, -15.2381, 0.690476, 2.04762, 15.2381, 0.690476, -2.2381, 15.2381, -0.738095, 2.04762)
+
+[node name="Level 10" type="Node3D" node_paths=PackedStringArray("doors_node", "backdoor_node")]
+script = ExtResource("1_gnb3t")
+doors_node = NodePath("Doors")
+backdoor_node = NodePath("Backdoor")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+process_mode = 4
+environment = SubResource("Environment_34hum")
+
+[node name="Player" parent="." node_paths=PackedStringArray("UI") instance=ExtResource("1_xy1qu")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -11, 3.5, 0)
+top_level = true
+UI = NodePath("../CanvasLayer/UI")
+
+[node name="Ground" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_qblg5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_hh2oi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_qblg5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground/MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_qblg5")
+
+[node name="Objects" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 14, -25)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -9.5, 25)
+omni_range = 30.0
+
+[node name="Restarter" parent="." instance=ExtResource("2_jjvta")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35, 0)
+
+[node name="Doors" type="Node3D" parent="."]
+script = ExtResource("3_3mnpy")
+
+[node name="Position 1" type="Node3D" parent="Doors"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 13, 2.5, 0)
+rotation_edit_mode = 2
+
+[node name="Door" parent="Doors/Position 1" instance=ExtResource("5_hh2oi")]
+
+[node name="Position 2" type="Node3D" parent="Doors"]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, 0, 2.5, -13.5)
+
+[node name="Door" parent="Doors/Position 2" instance=ExtResource("5_hh2oi")]
+
+[node name="Position 3" type="Node3D" parent="Doors"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 2.5, 13.5)
+
+[node name="Door" parent="Doors/Position 3" instance=ExtResource("5_hh2oi")]
+
+[node name="Backdoor" parent="." instance=ExtResource("4_6ayib")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -13, 2.5, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+follow_viewport_enabled = true
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("5_65guy")]
+metadata/_edit_use_anchors_ = true
+
+[node name="End Door" parent="." groups=["removed_game"] instance=ExtResource("8_qblg5")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2.5, 0)

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="New Game Project"
-run/main_scene="uid://be2u7tm373xxs"
+run/main_scene="uid://by33cw0etq4w0"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -27,6 +27,11 @@ window/size/viewport_width=1512
 window/size/viewport_height=982
 window/size/mode=4
 window/stretch/mode="canvas_items"
+
+[global_group]
+
+removed_end="Objects to be removed when the level is the end"
+removed_game="Nodes to remove when the player is still playing"
 
 [gui]
 

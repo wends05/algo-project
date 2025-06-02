@@ -1,13 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://dofh3ip4tgcea"]
+[gd_scene load_steps=15 format=3 uid="uid://dofh3ip4tgcea"]
 
 [ext_resource type="Script" uid="uid://ddq2w3ucuk6cy" path="res://scripts/levels/level.gd" id="1_ibugp"]
 [ext_resource type="PackedScene" uid="uid://0jipqcsji7bb" path="res://scenes/Player.tscn" id="1_r7620"]
-[ext_resource type="PackedScene" uid="uid://lp5ibftbl8au" path="res://scenes/Door.tscn" id="3_l37oo"]
+[ext_resource type="PackedScene" uid="uid://lp5ibftbl8au" path="res://scenes/doors/Door.tscn" id="3_l37oo"]
 [ext_resource type="PackedScene" uid="uid://drby8u21ujx3o" path="res://blends/tests.blend" id="4_r4a82"]
 [ext_resource type="PackedScene" uid="uid://bmmchwharvst6" path="res://scenes/restarter.tscn" id="5_6e15f"]
-[ext_resource type="Script" uid="uid://dhtbml4j4ieor" path="res://scripts/doors.gd" id="5_8qukl"]
-[ext_resource type="PackedScene" uid="uid://bj7dx1rkh453d" path="res://scenes/Backdoor.tscn" id="5_l37oo"]
+[ext_resource type="Script" uid="uid://dhtbml4j4ieor" path="res://scripts/doors/doors.gd" id="5_8qukl"]
+[ext_resource type="PackedScene" uid="uid://bj7dx1rkh453d" path="res://scenes/doors/Backdoor.tscn" id="5_l37oo"]
 [ext_resource type="PackedScene" uid="uid://rlgyii1ndy7k" path="res://scenes/ui.tscn" id="8_8qukl"]
+[ext_resource type="PackedScene" uid="uid://bo2a5y2tkg25x" path="res://scenes/doors/EndDoor.tscn" id="9_3p04p"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r7620"]
 sky_top_color = Color(0.609474, 0.338977, 0.546982, 1)
@@ -56,7 +57,7 @@ mesh = SubResource("BoxMesh_qcat7")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_ibugp")
 
-[node name="Objects" type="Node3D" parent="."]
+[node name="Objects" type="Node3D" parent="." groups=["removed_end"]]
 transform = Transform3D(0.75, 0.5, 0.433013, -0.433013, 0.866025, -0.25, -0.5, 0, 0.866025, -9, 2, 34)
 
 [node name="tests" parent="Objects" instance=ExtResource("4_r4a82")]
@@ -101,3 +102,6 @@ follow_viewport_enabled = true
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource("8_8qukl")]
 metadata/_edit_use_anchors_ = true
+
+[node name="End Door" parent="." groups=["removed_game"] instance=ExtResource("9_3p04p")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.5, 12)

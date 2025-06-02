@@ -3,6 +3,7 @@ extends Node3D
 class_name Level
 
 var level_index: int
+var is_end_level: bool = false
 
 @export var doors_node: Doors
 @export var backdoor_node: Backdoor
@@ -30,8 +31,25 @@ func _ready() -> void:
 		backdoor_node.queue_free()
 		print("No backdoor for level %d." % level_index)
 	
-	initialize_doors()
+	if level_index != Game.end_vertex:
+		is_end_level = false
+		initialize_doors()
+	else:
+		is_end_level = true
+		print("[Level] Level is the end")
 	
+	update_node_visibilities()
+	
+func update_node_visibilities():
+	if is_end_level:
+		
+		for node in get_tree().get_nodes_in_group("removed_end"):
+			node.queue_free()
+		doors_node.queue_free()
+	else:
+		for node in get_tree().get_nodes_in_group("removed_game"):
+			node.queue_free()
+	pass
 
 func initialize_doors():
 	var edges: Array = Game.get_doors(level_index)
