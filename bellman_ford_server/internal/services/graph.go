@@ -21,7 +21,7 @@ func (s *GraphService) GenerateRandomGraph(params models.GraphGenerationParams) 
 	}
 
 	edges := s.generateEdges(params)
-	
+
 	return &models.Graph{
 		NumberOfVertices: params.Vertices,
 		Edges:            edges,
@@ -186,17 +186,22 @@ func (s *GraphService) addRandomEdges(edges []models.Edge, edgeSet map[string]bo
 		u := rand.Intn(vertices)
 		v := rand.Intn(vertices)
 
+		// Skip self-loops
 		if u == v {
 			continue
 		}
 
+		// Ensure edges only go from lower level to higher level (prevents cycles)
 		var source, destination int
 		if levels[u] < levels[v] {
 			source = u
 			destination = v
-		} else {
+		} else if levels[u] > levels[v] {
 			source = v
 			destination = u
+		} else {
+			// Skip if vertices are at the same level to avoid potential cycles
+			continue
 		}
 
 		// Check constraints
@@ -204,6 +209,7 @@ func (s *GraphService) addRandomEdges(edges []models.Edge, edgeSet map[string]bo
 			continue
 		}
 
+		// Avoid direct edge from start to end (preserve path complexity)
 		if source == startVertex && destination == endVertex {
 			continue
 		}
@@ -213,6 +219,7 @@ func (s *GraphService) addRandomEdges(edges []models.Edge, edgeSet map[string]bo
 			continue
 		}
 
+		// Generate weight (can be negative, but cycles are prevented by level ordering)
 		weight := rand.Intn(2*weightRange+1) - weightRange
 
 		newEdge := models.Edge{
