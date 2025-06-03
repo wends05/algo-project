@@ -14,8 +14,8 @@ func _ready() -> void:
 	""" % [
 		Game.current_energy,
 		Game.get_goal_energy(),
-		str(Game.get_goal_path()),
-		Game.progress
+		Game.get_goal_path().map(func(x): return x + 1),
+		Game.progress.map(func(x): return x + 1)
 	]
 
 
